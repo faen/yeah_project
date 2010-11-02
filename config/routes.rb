@@ -1,4 +1,14 @@
 YeahProject::Application.routes.draw do
+  get "pages/home"
+
+  get "pages/features"
+
+  get "pages/about"
+  
+  get "pages/contact"
+  
+  get "pages/imprint"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
