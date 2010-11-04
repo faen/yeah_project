@@ -4,4 +4,8 @@ module ApplicationHelper
     return "#{base_title} | #{@title}" unless @title.nil?
     base_title
   end
+  
+  def logo
+    image_tag 'logo.png', :alt => "YEAH project", :class => 'round'
+  end
 end
