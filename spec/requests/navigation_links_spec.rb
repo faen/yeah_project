@@ -6,6 +6,10 @@ describe "NavigationLinks" do
     visit '/'
     click_link 'Features'
     response.should have_selector('title', :content => "Features")
+    click_link 'About'
+    response.should have_selector('title', :content => "About")
+    click_link 'Sign in'
+    response.should have_selector('title', :content => "Sign in")
   end
   
   it "It should have an 'home' page at '/'" do
