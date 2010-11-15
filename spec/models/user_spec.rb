@@ -151,12 +151,4 @@ describe User do
       u.should == @user
     end
   end
-  
-  describe "it should fail on invalid massassignments" do
-    it "email_acknowledged = true as massassignement should fail" do
-      @user = User.create!(@attr.merge(:email_acknowledgement => true))
-      @user.email_acknowledged.should_not be_true
-    end
-  end
-
 end
