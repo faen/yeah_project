@@ -24,4 +24,9 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  
+  # custom helper methods
+  def valid_user_attributes
+    {:email => "foo@bar.de", :password => "password"}
+  end
 end

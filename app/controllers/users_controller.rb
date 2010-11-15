@@ -20,5 +20,25 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
+  
+  def confirm_user_email_address
+    if( !params[:token].nil? )
+      @ack = EmailAcknowledgement.find_by_token(params[:token])
+      @user = @ack.email_acknowledgeable unless @ack.nil?
+    end
+    if( !@user.nil? )
+      if( @ack.expired? )
+        flash[:notice] = "Confirmation link expired"
+      elsif( @ack.acknowledged? )
+        flash[:notice] = "Confirmation link already used"
+      else
+        @ack.confirm
+        @ack.save
+      end
+      render 'signup_confirmation'
+    else
+      redirect_to root_path
+    end
+  end
 
 end

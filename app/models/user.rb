@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :email_confirmation, :password, :password_confirmation
   attr_accessor :password
   
+  has_one :email_acknowledgement, :as => :email_acknowledgeable
+  
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   pwd_regex = /\A[\w\d\!-]{6,12}\z/i
   
@@ -30,18 +32,29 @@ class User < ActiveRecord::Base
                        :format => {:with => pwd_regex },
                        :confirmation => true
 
-  before_save :create_encrypted_password
+  before_save :create_encrypted_password, :create_email_acknowledgement
   
   # class methods
   def self.authenticate(email, password)
     user = find_by_email(email)
+    puts " user: #{user.inspect}"
     return nil if user.nil?
+    return nil if !user.email_acknowledged?
     return user if user.has_password?(password)
+  end
+  
+  def self.authenticate_from_session(session_user_id, session_user_salt)
+    user = find_by_id(session_user_id)
+    (user && user.salt == session_user_salt) ? user : nil
   end
   
   # instance methods
   def has_password?(submitted_password)
     self.encrypted_password == encrypt_password(submitted_password)
+  end
+  
+  def email_acknowledged?
+    self.email_acknowledgement.acknowledged?
   end
   
   private
@@ -56,6 +69,12 @@ class User < ActiveRecord::Base
     
     def create_salt
       secure_hash("#{Time.now.utc}--#{self.password}")
+    end
+    
+    def create_email_acknowledgement
+      self.email_acknowledgement = EmailAcknowledgement.new :email_acknowledgeable => self,
+                                                            :email => self.email,
+                                                            :expiration_hours => 48
     end
     
     def secure_hash(string)

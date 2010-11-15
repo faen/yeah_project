@@ -6,6 +6,8 @@ YeahProject::Application.routes.draw do
   match '/imprint', :to => 'pages#imprint'
   match '/signup', :to => 'users#new'
   match '/signin', :to => 'sessions#new'
+  match '/signout', :to => 'sessions#destroy'
+  match '/confirm', :to => 'users#confirm_user_email_address'
   
   resources :users
   resources :sessions

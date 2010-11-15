@@ -10,7 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101104075609) do
+ActiveRecord::Schema.define(:version => 20101108124759) do
+
+  create_table "email_acknowledgements", :force => true do |t|
+    t.string   "token"
+    t.datetime "expire_date"
+    t.string   "ack_state"
+    t.integer  "email_acknowledgeable_id"
+    t.string   "email_acknowledgeable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email"

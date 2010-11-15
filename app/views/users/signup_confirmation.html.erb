@@ -1,6 +1,24 @@
-<h1>You have successfully signed up</h1>
-<p>
-  We've sent an email to the emai account you entered with your signup form<br/>
-  Please check your emails and follow the instructions to finally activate your account.<br/>
-  Thanks!
-</p>
+<h1>Your signup confirmation</h1>
+<% e_ack = @user.email_acknowledgement %>
+<% if e_ack.pending? %>
+  <p>
+    We've sent an email to the account you entered when signing up.<br/>
+    Please check your emails and follow the instructions to finally activate your account.<br/>
+    Thanks!
+  </p>
+<% elsif e_ack.acknowledged? %>
+  <p>
+    Your email address <%= @user.email %> has been confirmed.</br>
+    Please type your favorite password (twice for confirmation) and press 'submit'.
+  <p/>
+<% elsif e_ack.expired? %>
+  <p>
+    Apparently the link to confirm your signup has expired.<br/>
+    For reasons of security and your privacy signup confirmation links expire after 48 hours of not being followed.<br/>
+     
+  </p>
+<% else %>
+  <p>
+    
+  </p>
+<% end %>
