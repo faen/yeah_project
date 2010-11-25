@@ -1,0 +1,16 @@
+<%= link_to "new project", new_user_project_path(current_user) %>
+<table>
+<% @projects.each do |p| %>
+  <tr>
+    <td>
+      <%= p.name %>
+    </td>
+    <td>
+      <% edit_path = @user.nil? ? edit_project_path(p) : edit_user_project_path(current_user, p) %>
+      <% delete_path = @user.nil? ? project_path(p) : user_project_path(current_user, p) %>
+      <%= link_to "edit", edit_path %>
+      <%= link_to "delete", delete_path, :method => :delete, :confirm => "Are you sure?"%>
+    </td>
+  </tr>
+<% end %>
+</table>

@@ -42,8 +42,8 @@ describe EmailAcknowledgement do
       @ack.should respond_to :expire_date
     end
   
-    it "should have an expire date 48 hrs greater than user's creation date" do
-      @ack.expire_date.should == @user.created_at + 48 * 3600
+    it "should have an expire date greater than it's update date" do
+      @ack.expire_date.should > @ack.updated_at
     end
     
     it "should have a token" do

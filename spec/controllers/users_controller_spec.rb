@@ -61,7 +61,43 @@ describe UsersController do
     end
     
     describe "success" do
+      it "should be successful" do
+        post :create, :user => valid_user_attributes
+        response.should be_success
+      end
       
+      it "should render confirmation page" do
+        post :create, :user => valid_user_attributes
+        response.should have_selector('h1', :content => "Your signup confirmation") 
+      end
     end
+  end
+  
+  describe "PUT 'update'" do
+    before(:each) do
+      @user = Factory(:user)
+    end
+    
+    describe "Access control" do
+      it "should deny access"
+      
+      it "should allow access" do
+        controller.sign_in(@user)
+        put :update, :id => @user, :user => {}
+        response.should be_success
+      end
+    end
+    
+    describe "update the user's email address" do
+      it "should be successful"
+      
+      it "should signout the user"
+      
+      it "should reset the user's email_acknowledgement"
+    end
+  end
+  
+  describe "Delete 'destroy'" do
+    
   end
 end

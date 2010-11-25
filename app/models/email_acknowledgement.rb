@@ -2,7 +2,7 @@ class EmailAcknowledgement < ActiveRecord::Base
   include AASM
   
   aasm_column :ack_state
-  aasm_state :pending
+  aasm_state :pending, :enter => :on_pending
   aasm_state :acknowledged
   aasm_state :expired
   aasm_initial_state :pending
@@ -36,8 +36,8 @@ class EmailAcknowledgement < ActiveRecord::Base
   
   validates :email_acknowledgeable, :presence => true
                              
-  before_create :create_expiration_date, 
-                :create_token_from_email_and_time
+  # before_create :create_expiration_date, 
+  #               :create_token_from_email_and_time
   
   
   private
@@ -45,12 +45,17 @@ class EmailAcknowledgement < ActiveRecord::Base
       return true if self.new_record? || self.ack_state == :pending
     end
     
+    def on_pending
+      create_expiration_date
+      create_token_from_email_and_time
+    end
+    
     def create_expiration_date
-      self.expire_date = email_acknowledgeable.created_at + 48 * 3600
+      self.expire_date = Time.now + 2.days
     end
     
     def create_token_from_email_and_time
-      self.token = secure_hash("#{self.email}--#{Time.now.utc}") if self.new_record?
+      self.token = secure_hash("#{self.email}--#{Time.now.utc}")
     end
     
     def secure_hash(string)

@@ -1,0 +1,14 @@
+<% submit_label = @project.new_record? ? "create" : "update" %>
+<%= form_for @project do |f| %>
+  <table>
+    <tr>
+      <td>
+        <%= f.label :name %>
+      </td>
+      <td>
+        <%= f.text_field :name %>
+      </td>
+    </tr>
+  </table>
+  <%= f.submit submit_label %>
+<% end %>

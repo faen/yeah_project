@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
   
   has_one :email_acknowledgement, :as => :email_acknowledgeable
+  has_and_belongs_to_many :projects, :join_table => :projects_members
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   pwd_regex = /\A[\w\d\!-]{6,12}\z/i
@@ -28,16 +29,16 @@ class User < ActiveRecord::Base
                     :uniqueness => {:case_sensitive => false}
   
   validates :password, :presence => true,
-                       # :length => 6..12,
                        :format => {:with => pwd_regex },
-                       :confirmation => true
+                       :confirmation => true,
+                       :if => :should_validate_volatile_attributes?
 
-  before_save :create_encrypted_password, :create_email_acknowledgement
+  before_create :create_email_acknowledgement
+  before_save :create_encrypted_password, :if => lambda { !self.password.nil? }
   
   # class methods
   def self.authenticate(email, password)
     user = find_by_email(email)
-    puts " user: #{user.inspect}"
     return nil if user.nil?
     return nil if !user.email_acknowledged?
     return user if user.has_password?(password)
@@ -58,6 +59,10 @@ class User < ActiveRecord::Base
   end
   
   private
+    def should_validate_volatile_attributes?
+      return true if self.new_record?
+    end
+    
     def create_encrypted_password
       self.salt = create_salt if self.new_record?
       self.encrypted_password = encrypt_password(self.password)
@@ -72,9 +77,9 @@ class User < ActiveRecord::Base
     end
     
     def create_email_acknowledgement
-      self.email_acknowledgement = EmailAcknowledgement.new :email_acknowledgeable => self,
-                                                            :email => self.email,
-                                                            :expiration_hours => 48
+        self.email_acknowledgement = EmailAcknowledgement.new :email_acknowledgeable => self,
+                                                              :email => self.email,
+                                                              :expiration_hours => 48
     end
     
     def secure_hash(string)

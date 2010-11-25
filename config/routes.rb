@@ -9,7 +9,10 @@ YeahProject::Application.routes.draw do
   match '/signout', :to => 'sessions#destroy'
   match '/confirm', :to => 'users#confirm_user_email_address'
   
-  resources :users
+  resources :projects
+  resources :users do
+    resources :projects
+  end
   resources :sessions
 
   # The priority is based upon order of creation:

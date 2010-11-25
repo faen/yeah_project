@@ -100,24 +100,6 @@ describe User do
     it "should set an email_acknowledgement" do
       @ack.should_not be_blank
     end
-    
-    describe "email_acknowledgement" do
-      it "email_ackowledgeable should be user" do
-        @ack.email_acknowledgeable.should == @user
-      end
-      
-      it "should have ack_status 'pending'" do
-        @ack.ack_state.should == "pending"
-      end
-      
-      it "should have attribute expire_date" do
-        @ack.should respond_to :expire_date
-      end
-      
-      it "should have an expire date 48 hrs greater than user's creation date" do
-        @ack.expire_date.should == @user.created_at + 48 * 3600
-      end
-    end
   end
 
   describe "authenticate class method" do

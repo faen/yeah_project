@@ -1,0 +1,68 @@
+<h1>Edit User<%= @user.email %></h1>
+<table class='not_altering'>
+<%= form_for @user do |f| %>
+  <tr>
+    <td colspan='2'>
+      <strong>Change Email</strong>
+    </td>
+  </td>
+  <tr>
+    <td>
+      current email:
+    </td>
+    <td>
+      <%= @user.email %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.label :email %>
+    </td>
+    <td>
+      <%= f.text_field :email, :value => "" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.label :email_confirmation %>
+    </td>
+    <td>
+      <%= f.text_field :email_confirmation %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan='2'>
+      <%= f.submit "update Email"%>
+    </td>
+  </td>
+<% end %>
+
+<%= form_for @user do |f| %>
+  <tr>
+    <td colspan='2'>
+      <strong>Change password</strong>
+    </td>
+  </td>
+  <tr>
+    <td>
+      <%= f.label :password %>
+    </td>
+    <td>
+      <%= f.password_field :password %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.label :password_confirmation %>
+    </td>
+    <td>
+      <%= f.password_field :password_confirmation %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan='2'>
+      <%= f.submit "update Password"%>
+    </td>
+  </td>
+<% end %>
+</table>
