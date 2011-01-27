@@ -1,0 +1,19 @@
+<h1><%= @product.realm.name %> / <%= @product.name %></h1>
+<h2>Projects</h2>
+<%= link_to "new project", new_product_project_path(@product)%>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+    <tr>
+  </thead>
+  <tbody>
+    <% @projects.each do |p| %>
+      <tr>
+        <td>
+          <%= link_to p.name, product_project_path(@product, p)%>
+        </td>
+      <tr>
+    <% end %>
+  </tbody>
+</table>

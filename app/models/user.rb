@@ -14,11 +14,17 @@
 require 'digest'
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :email_confirmation, :password, :password_confirmation
-  attr_accessor :password
   
+  
+  has_one :user_profile
   has_one :email_acknowledgement, :as => :email_acknowledgeable
+  has_many :realms
+  has_many :products
   has_and_belongs_to_many :projects, :join_table => :projects_members
+  
+  attr_accessible :email, :email_confirmation, :password, :password_confirmation, :user_profile_attributes
+  attr_accessor :password, :current_password
+  accepts_nested_attributes_for :user_profile
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   pwd_regex = /\A[\w\d\!-]{6,12}\z/i
@@ -33,8 +39,9 @@ class User < ActiveRecord::Base
                        :confirmation => true,
                        :if => :should_validate_volatile_attributes?
 
-  before_create :create_email_acknowledgement
   before_save :create_encrypted_password, :if => lambda { !self.password.nil? }
+  before_create :create_email_acknowledgement
+  after_create :create_profile
   
   # class methods
   def self.authenticate(email, password)
@@ -56,6 +63,14 @@ class User < ActiveRecord::Base
   
   def email_acknowledged?
     self.email_acknowledgement.acknowledged?
+  end
+  
+  def email_acknowledgement_status
+    self.email_acknowledgement.status
+  end
+  
+  def is_super_admin?
+    self.email == "fabian.englaender@enterat.de"
   end
   
   private
@@ -84,6 +99,10 @@ class User < ActiveRecord::Base
     
     def secure_hash(string)
       Digest::SHA2.hexdigest(string)
+    end
+    
+    def create_profile
+      self.user_profile = UserProfile.new({user_id: self.id})
     end
   
 end

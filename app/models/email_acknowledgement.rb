@@ -1,3 +1,18 @@
+# == Schema Information
+# Schema version: 20110119171126
+#
+# Table name: email_acknowledgements
+#
+#  id                         :integer         not null, primary key
+#  token                      :string(255)
+#  expire_date                :datetime
+#  ack_state                  :string(255)
+#  email_acknowledgeable_id   :integer
+#  email_acknowledgeable_type :string(255)
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#
+
 class EmailAcknowledgement < ActiveRecord::Base
   include AASM
   
@@ -35,9 +50,10 @@ class EmailAcknowledgement < ActiveRecord::Base
                     :if => :should_validate_volatile_attributes?
   
   validates :email_acknowledgeable, :presence => true
-                             
-  # before_create :create_expiration_date, 
-  #               :create_token_from_email_and_time
+  
+  def status
+    ack_state
+  end
   
   
   private
@@ -51,7 +67,8 @@ class EmailAcknowledgement < ActiveRecord::Base
     end
     
     def create_expiration_date
-      self.expire_date = Time.now + 2.days
+      add_hours = expiration_hours ||= 48
+      self.expire_date = Time.now + add_hours.hours
     end
     
     def create_token_from_email_and_time

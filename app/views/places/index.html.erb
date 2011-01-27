@@ -1,0 +1,22 @@
+<h1>Places</h1>
+<%= link_to "setup countries", :controller => "places", :action => "setup_countries"%>
+
+<table>
+  <tbody>
+    <% @countries.each do |country| %>
+      <tr>
+        <td><%= country.name %></td>
+        <td><%= country.iso2 %></td>
+        <td><%= country.iso3 %></td>
+        <td><%= country.ison %></td>
+        <td>
+          <ul>
+            <% country.regions.each do |region| %>
+              <li><%= region.name %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  <tbody>
+</table>

@@ -1,1 +1,6 @@
 <%= render 'form'%>
+<div>
+  <%@members.each do |member|%>
+    <p><%= member.email %></p>
+  <% end %>
+</div>

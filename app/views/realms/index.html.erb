@@ -1,0 +1,29 @@
+<h1>My realms</h1>
+<%= link_to "new realm", new_user_realm_path(current_user) %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>products</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @realms.each do |r| %>
+  <tr>
+    <td>
+      <%= link_to r.name, user_realm_path(current_user, r) %>
+    </td>
+    <td>
+      <%= r.products.collect{|p| [p.name]}.split.join(", ") %>
+    </td>
+    <td>
+      <% edit_path = edit_user_realm_path(current_user, r) %>
+      <% delete_path = user_realm_path(current_user, r) %>
+      <%= link_to "edit", edit_path %>
+      <%= link_to "delete", delete_path, :method => :delete, :confirm => "Are you sure?"%>
+    </td>
+  </tr>
+<% end %>
+  </tbody>
+</table>

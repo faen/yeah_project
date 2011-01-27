@@ -18,6 +18,7 @@ describe UsersController do
   describe "GET 'show" do
     before(:each) do
       @user = Factory(:user)
+      controller.sign_in(@user)
     end
     
     it "should be successfull" do
@@ -79,7 +80,10 @@ describe UsersController do
     end
     
     describe "Access control" do
-      it "should deny access"
+      it "should deny access" do
+        put :update, :id => @user, :user => {}
+        response.should be_redirect
+      end
       
       it "should allow access" do
         controller.sign_in(@user)
@@ -89,11 +93,21 @@ describe UsersController do
     end
     
     describe "update the user's email address" do
-      it "should be successful"
+      before(:each) do
+        @user.email_acknowledgement.confirm!
+        controller.sign_in(@user)
+      end
       
-      it "should signout the user"
+      it "should be successful" do
+        
+      end
       
-      it "should reset the user's email_acknowledgement"
+      it "should signout the user" do
+        controller.signed_in?.should be_true
+        put :update, :id => @user, :user => {:email => "fabian.englaender@enterat.de"}
+        response.should redirect_to(root_path)
+        controller.signed_in?.should be_false
+      end
     end
   end
   

@@ -9,8 +9,26 @@ YeahProject::Application.routes.draw do
   match '/signout', :to => 'sessions#destroy'
   match '/confirm', :to => 'users#confirm_user_email_address'
   
+  resources :places do
+    collection do
+      get 'setup_countries'
+    end
+  end
+  # resources :realms
   resources :projects
-  resources :users do
+  resources :products do
+    resources :projects
+  end 
+  resources :realms do
+    resources :products
+  end
+  resources :users do 
+    resources :realms do
+      resources :products
+    end
+    resources :products do
+      resources :projects
+    end
     resources :projects
   end
   resources :sessions

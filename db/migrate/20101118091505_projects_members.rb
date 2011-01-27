@@ -5,6 +5,8 @@ class ProjectsMembers < ActiveRecord::Migration
       t.references :project
       t.references :role
     end
+    add_index 'projects_members', 'user_id'
+    add_index 'projects_members', 'project_id'
   end
 
   def self.down

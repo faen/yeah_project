@@ -1,2 +1,8 @@
 <h1>showing user <%= @user.email %></h1>
+<%= link_to "edit my profile", edit_user_path(@user)%>
+<br>
+<%= link_to "my realms", user_realms_path(@user)%>
+<br>
+<%= link_to "my products", user_products_path(@user)%>
+<br>
 <%= link_to "my projects", user_projects_path(@user)%>

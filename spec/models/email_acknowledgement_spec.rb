@@ -23,9 +23,6 @@ describe EmailAcknowledgement do
       ea.should_not be_valid
     end
     
-    it "should reject an invalid Email"
-    
-    it "should reject an invalid EmailAcknowledgeable entity"
   end
   
   describe "valid Email Acknowledgement" do

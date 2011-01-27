@@ -62,6 +62,11 @@ describe User do
         u.should be_valid
       end
     end
+    
+    it "should have a user_profile after creation" do
+      u = User.create(@attr)
+      u.user_profile.should_not be_nil
+    end
   end
 
   describe "password encryption" do

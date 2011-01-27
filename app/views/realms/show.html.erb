@@ -1,0 +1,19 @@
+<h1><%=@realm.name%></h1>
+<h2>Products:</h2>
+<%= link_to "new product", new_realm_product_path(@realm) %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @products.each do |p|%>
+  <tr>
+    <td>
+      <%= link_to p.name, realm_product_path(@realm, p)%>
+    </td>
+  </tr>
+<% end %>
+  </tbody>
+</table>

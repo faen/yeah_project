@@ -1,16 +1,32 @@
 <%= link_to "new project", new_user_project_path(current_user) %>
 <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Product</th>
+      <th>Realm</th>
+      <th>&nbsp;<th>
+    </tr>
+  </thead>
+  <tbody>
 <% @projects.each do |p| %>
-  <tr>
-    <td>
-      <%= p.name %>
-    </td>
-    <td>
-      <% edit_path = @user.nil? ? edit_project_path(p) : edit_user_project_path(current_user, p) %>
-      <% delete_path = @user.nil? ? project_path(p) : user_project_path(current_user, p) %>
-      <%= link_to "edit", edit_path %>
-      <%= link_to "delete", delete_path, :method => :delete, :confirm => "Are you sure?"%>
-    </td>
-  </tr>
+    <tr>
+      <td>
+        <%= link_to p.name, user_project_path(current_user, p) %>
+      </td>
+      <td>
+        <%= link_to p.product.name, user_product_path(current_user, p.product) %>
+      </td>
+      <td>
+        <%= link_to p.product.realm.name, user_realm_path(current_user, p.product.realm) %>
+      </td>
+      <td>
+        <% edit_path = @user.nil? ? edit_project_path(p) : edit_user_project_path(current_user, p) %>
+        <% delete_path = @user.nil? ? project_path(p) : user_project_path(current_user, p) %>
+        <%= link_to "edit", edit_path %>
+        <%= link_to "delete", delete_path, :method => :delete, :confirm => "Are you sure?"%>
+      </td>
+    </tr>
 <% end %>
+  </tbody>
 </table>

@@ -7,14 +7,23 @@
     Thanks!
   </p>
 <% elsif e_ack.acknowledged? %>
-  <p>
-    Your email address <%= @user.email %> has been confirmed.</br>
-    Please type your favorite password (twice for confirmation) and press 'submit'.
-  <p/>
+  <% if(initial) %>
+    <p>
+      Your email address <%= @user.email %> has been confirmed.</br>
+    <p/>
+    <p>
+      <%= render 'sessions/form'%>
+    </p>
+  <% else %>
+    <p>
+      This confirmation link had already been used
+    </p>
+    <%= link_to "Sign in now!", signin_path, :class => "signup_button round" %>
+  <% end %>
 <% elsif e_ack.expired? %>
   <p>
     Apparently the link to confirm your signup has expired.<br/>
-    For reasons of security and your privacy signup confirmation links expire after 48 hours of not being followed.<br/>
+    For reasons of security and your privacy's protection signup confirmation links expire after 48 hours of not being followed.<br/>
      
   </p>
 <% else %>

@@ -5,7 +5,7 @@
     <td colspan='2'>
       <strong>Change Email</strong>
     </td>
-  </td>
+  </tr>
   <tr>
     <td>
       current email:
@@ -34,7 +34,7 @@
     <td colspan='2'>
       <%= f.submit "update Email"%>
     </td>
-  </td>
+  </tr>
 <% end %>
 
 <%= form_for @user do |f| %>
@@ -42,13 +42,21 @@
     <td colspan='2'>
       <strong>Change password</strong>
     </td>
-  </td>
+  </tr>
+  <tr>
+    <td>
+      <%= f.label :current_password %>
+    </td>
+    <td>
+      <%= f.password_field :current_password, :value => "" %>
+    </td>
+  </tr>
   <tr>
     <td>
       <%= f.label :password %>
     </td>
     <td>
-      <%= f.password_field :password %>
+      <%= f.password_field :password, :value => "" %>
     </td>
   </tr>
   <tr>
@@ -63,6 +71,45 @@
     <td colspan='2'>
       <%= f.submit "update Password"%>
     </td>
-  </td>
+  </tr>
+<% end %>
+
+<%= form_for @user do |f| %>
+  <tr>
+    <td colspan='2'>
+      <strong>Change user profile:</strong>
+    </td>
+  </tr>
+  <%= f.fields_for :user_profile do |u_p| %>
+    <tr>
+      <td>
+        <%= u_p.label :firstname %>
+      </td>
+      <td>
+        <%= u_p.text_field :firstname %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= u_p.label :lastname %>
+      </td>
+      <td>
+        <%= u_p.text_field :lastname %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= u_p.label :date_of_birth %>
+      </td>
+      <td>
+        <%= u_p.date_select :date_of_birth, {start_year:  Time.now.year, end_year:  Time.now.year - 100} %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td colspan='2'>
+      <%= f.submit "update Profile"%>
+    </td>
+  </tr>
 <% end %>
 </table>

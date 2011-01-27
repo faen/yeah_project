@@ -1,6 +1,26 @@
+<% select_product_label = @project.product.nil? ? "select a product" : @products.empty? ? "no other product available" : "move to another product" %>
 <% submit_label = @project.new_record? ? "create" : "update" %>
-<%= form_for @project do |f| %>
+<% url = @project.new_record? ? user_projects_path(current_user) : user_project_path(current_user, @project)%>
+<%= form_for @project, :url => url do |f| %>
   <table>
+    <tr>
+      <% if @products.empty? %>
+        <td colspan='2'>
+          <%= select_product_label%>
+        </td>
+      <% else %>
+        <td>
+          <%= select_product_label%>
+        </td>
+        <td>
+          <% 
+            options = @products.collect{|p| [p.name, p.id] }
+            options = options_for_select(options, @preselected_product.id.to_s) if @preselected_product  
+          %>
+          <%= f.select 'product_id', options %>
+        </td>
+      <% end %>
+    </tr>
     <tr>
       <td>
         <%= f.label :name %>

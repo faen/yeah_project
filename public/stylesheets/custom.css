@@ -6,6 +6,14 @@ body {
   background: #cff;
 }
 
+h1 {
+	font-size: 150%;
+}
+
+h2 {
+	font-size: 120%;
+}
+
 header {
   padding-top: 20px;
 }
@@ -27,7 +35,7 @@ section {
 }
 
 section h1 {
-  font-size: 200%;
+  
 }
 
 /* Links */
@@ -165,6 +173,9 @@ a.signup_button {
 
 table.not_altering tr:nth-child(2n) td, table.not_altering tbody tr.even td {
 	background-color: transparent
+}
+table, th, td {
+	vertical-align: top;
 }
 
 

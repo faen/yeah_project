@@ -10,7 +10,46 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101118091505) do
+ActiveRecord::Schema.define(:version => 20110119171126) do
+
+  create_table "addresses", :force => true do |t|
+    t.integer  "country_id"
+    t.integer  "region_id"
+    t.string   "city"
+    t.string   "zip"
+    t.string   "street"
+    t.string   "street_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "contacts", :force => true do |t|
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "countries", :force => true do |t|
+    t.string   "name"
+    t.string   "fips104",              :limit => 2,  :null => false
+    t.string   "iso2",                 :limit => 2,  :null => false
+    t.string   "iso3",                 :limit => 3,  :null => false
+    t.string   "ison",                 :limit => 4,  :null => false
+    t.string   "internet",             :limit => 2,  :null => false
+    t.string   "capital",              :limit => 25
+    t.string   "map_reference",        :limit => 50
+    t.string   "nationality_singular", :limit => 35
+    t.string   "nationaiity_plural",   :limit => 35
+    t.string   "currency",             :limit => 30
+    t.string   "currency_code",        :limit => 3
+    t.integer  "population"
+    t.string   "title",                :limit => 50
+    t.string   "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "email_acknowledgements", :force => true do |t|
     t.string   "token"
@@ -22,16 +61,62 @@ ActiveRecord::Schema.define(:version => 20101118091505) do
     t.datetime "updated_at"
   end
 
+  create_table "organisations", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products", :force => true do |t|
+    t.string   "name"
+    t.integer  "realm_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
+    t.integer  "product_id"
   end
 
   create_table "projects_members", :id => false, :force => true do |t|
     t.integer "user_id"
     t.integer "project_id"
     t.integer "role_id"
+  end
+
+  add_index "projects_members", ["project_id"], :name => "index_projects_members_on_project_id"
+  add_index "projects_members", ["user_id"], :name => "index_projects_members_on_user_id"
+
+  create_table "realms", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "regions", :force => true do |t|
+    t.integer  "country_id",                 :null => false
+    t.string   "name",         :limit => 45, :null => false
+    t.string   "code",         :limit => 8,  :null => false
+    t.string   "adm1code",     :limit => 4,  :null => false
+    t.string   "country_ison", :limit => 4,  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_profiles", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "gender"
+    t.date     "date_of_birth"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
