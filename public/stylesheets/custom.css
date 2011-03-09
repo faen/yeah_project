@@ -178,4 +178,6 @@ table, th, td {
 	vertical-align: top;
 }
 
-
+textarea {
+	height: 100px;
+}

@@ -4,12 +4,14 @@ describe Project do
   before(:each) do
     @project_owner = Factory(:user)
     @product = Factory(:product)
-    @valid_attr = { name: Faker::Name.name, user: @project_owner, product: @product}
+    @valid_attr = { name: Faker::Name.name, user: @project_owner, product: @product, organisation_type: "scrum_based"}
   end
   describe "associations" do
     before(:each) do
       @project = Project.new @valid_attr
     end
+    
+    # it { should belong_to :user }
     
     it "should belong to one user" do
       @project.should respond_to(:user)
@@ -42,6 +44,11 @@ describe Project do
     
     it "should require a product" do
       @project = Project.new(@valid_attr.merge :product => nil)
+      @project.should_not be_valid
+    end
+    
+    it "should require an organisation_type" do
+      @project = Project.new(@valid_attr.merge :organisation_type => '')
       @project.should_not be_valid
     end
     

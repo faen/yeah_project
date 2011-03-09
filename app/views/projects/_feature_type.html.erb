@@ -1,0 +1,23 @@
+<h2>Tasks</h2>
+<%= link_to "new feature", new_project_feature_path(@project)%>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    <tr>
+  </thead>
+  <tbody>
+    <% @features.each do |f| %>
+      <tr>
+        <td>
+          <%= link_to f.name, project_feature_path(@project, f)%>
+        </td>
+        <td>
+          <%= link_to "edit", edit_project_feature_path(@project, f)%>
+          <%= link_to "delete", project_feature_path(@project, f), :method => :delete, :confirm => "Are you sure?"%>
+        </td>
+      <tr>
+    <% end %>
+  </tbody>
+</table>

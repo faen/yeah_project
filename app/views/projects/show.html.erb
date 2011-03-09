@@ -1,11 +1,13 @@
-<h1><%= @project.product.realm.name %> / <%= @project.product.name %> / <%= @project.name %></h1>
+<%= resource_browser @project%>
+<% 
+  case @project.organisation_type 
+  when 'scrum_based' then template = 'scrum_type'
+  when 'feature_based' then template = 'feature_type'
+  when 'task_based' then template = 'task_type'
+  when 'flat' then template = 'flat_type'
+  end
+%>
+<%= render template%>
 <p>
-  want to have:
-  <ol>
-    <li>time tracker</li>
-    <li>time sheets</li>
-    <li>task lists</li>
-    <li>project management features</li>
-    <li>
-  </ol>
+  <%= parent_link @project %>
 </p>

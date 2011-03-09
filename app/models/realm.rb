@@ -11,8 +11,9 @@
 #
 
 class Realm < ActiveRecord::Base
+  include StructuralItem::Model
   belongs_to :user
-  has_many :products
+  has_many :products, :dependent => :destroy
   
   attr_accessible :name, :user
   

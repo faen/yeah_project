@@ -10,13 +10,6 @@ module SessionsHelper
     redirect_to root_path
   end
   
-  # def current_user= (user)
-  #   puts "#current_user= :"
-  #   puts "@current_user 1: #{@current_user}"
-  #   @current_user = user
-  #   puts "@current_user 2: #{@current_user}"
-  # end
-  
   def current_user
     @current_user ||= user_from_session
   end

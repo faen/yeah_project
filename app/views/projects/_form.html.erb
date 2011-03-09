@@ -1,4 +1,4 @@
-<% select_product_label = @project.product.nil? ? "select a product" : @products.empty? ? "no other product available" : "move to another product" %>
+<% select_product_label = @project.product.nil? ? "select a product" : @products.empty? ? "#{@project.product.name} (no other product available)" : "move to another product" %>
 <% submit_label = @project.new_record? ? "create" : "update" %>
 <% url = @project.new_record? ? user_projects_path(current_user) : user_project_path(current_user, @project)%>
 <%= form_for @project, :url => url do |f| %>
@@ -29,6 +29,17 @@
         <%= f.text_field :name %>
       </td>
     </tr>
+    <% if @project.new_record? %>
+      <td>
+        <%= "select organisation type:"%>
+      </td>
+      <td>
+        <% 
+          options = options_for_select(Project.organisation_types)
+        %>
+        <%= f.select 'organisation_type', options %>
+      </td>
+    <% end %>
   </table>
   <%= f.submit submit_label %>
 <% end %>

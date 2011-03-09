@@ -1,0 +1,33 @@
+<h2>Backlog</h2>
+<%= link_to "new user story", new_backlog_user_story_path(@backlog)%>
+<table>
+  <thead>
+    <tr>
+      <th>Priority</th>
+      <th>Points</th>
+      <th>Name</th>
+      <th>Story</th>
+      <th>Tests</th>
+      <th></th>
+    <tr>
+  </thead>
+  <tbody>
+    <% @backlog.user_stories.each do |s| %>
+      <tr>
+        <td><%= s.priority %></td>
+        <td><%= s.story_points %></td>  
+        <td>
+          <%= link_to s.name, backlog_user_story_path(@backlog, s)%>
+        </td>
+        <td>
+          <%= s.story %>
+        </td>
+        <td><%= s.acceptance_tests.count %></td>
+        <td>
+          <%= link_to "edit", edit_backlog_user_story_path(@backlog, s)%>
+          <%= link_to "delete", backlog_user_story_path(@backlog, s), :method => :delete, :confirm => "Are you sure?"%>
+        </td>
+      <tr>
+    <% end %>
+  </tbody>
+</table>

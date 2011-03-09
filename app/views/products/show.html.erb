@@ -1,10 +1,12 @@
-<h1><%= @product.realm.name %> / <%= @product.name %></h1>
+<%= resource_browser @product%>
 <h2>Projects</h2>
 <%= link_to "new project", new_product_project_path(@product)%>
 <table>
   <thead>
     <tr>
       <th>Name</th>
+      <th>Type</th>
+      <th></th>
     <tr>
   </thead>
   <tbody>
@@ -13,7 +15,17 @@
         <td>
           <%= link_to p.name, product_project_path(@product, p)%>
         </td>
+        <td>
+          <%= "(#{p.organisation_type})"%>
+        </td>
+        <td>
+          <%= link_to "edit", edit_product_project_path(@product, p)%>
+          <%= link_to "delete", product_project_path(@product, p), :method => :delete, :confirm => "Are you sure?"%>
+        </td>
       <tr>
     <% end %>
   </tbody>
 </table>
+<p>
+  <%= parent_link @product %>
+</p>

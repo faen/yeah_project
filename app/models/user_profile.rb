@@ -20,4 +20,8 @@ class UserProfile < ActiveRecord::Base
   validates :firstname, :presence => true
   validates :lastname, :presence => true
   validates :date_of_birth, :presence => true
+  
+  def name
+    "#{self.firstname} #{self.lastname}"
+  end
 end

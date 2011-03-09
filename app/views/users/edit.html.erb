@@ -48,7 +48,7 @@
       <%= f.label :current_password %>
     </td>
     <td>
-      <%= f.password_field :current_password, :value => "" %>
+      <%= f.password_field :current_password, :value => "", :autocomplete => "off" %>
     </td>
   </tr>
   <tr>
@@ -56,7 +56,7 @@
       <%= f.label :password %>
     </td>
     <td>
-      <%= f.password_field :password, :value => "" %>
+      <%= f.password_field :password, :value => "", :autocomplete => "off" %>
     </td>
   </tr>
   <tr>
@@ -64,7 +64,7 @@
       <%= f.label :password_confirmation %>
     </td>
     <td>
-      <%= f.password_field :password_confirmation %>
+      <%= f.password_field :password_confirmation, :autocomplete => "off" %>
     </td>
   </tr>
   <tr>

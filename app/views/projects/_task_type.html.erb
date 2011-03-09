@@ -1,0 +1,31 @@
+<h2>Tasks</h2>
+<%= link_to "new task", new_project_task_path(@project)%>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th></th>
+    <tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |t| %>
+      <tr>
+        <td>
+          <%= link_to t.name, project_task_path(@project, t)%>
+        </td>
+        <td>
+          <%= t.user.user_profile.firstname || t.user.email if t.user%>
+        </td>
+        <td>
+          <%= t.fulfil_status%>
+        </td>
+        <td>
+          <%= link_to "edit", edit_project_task_path(@project, t)%>
+          <%= link_to "delete", project_task_path(@project, t), :method => :delete, :confirm => "Are you sure?"%>
+        </td>
+      <tr>
+    <% end %>
+  </tbody>
+</table>

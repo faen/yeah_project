@@ -1,0 +1,11 @@
+<%= resource_browser @task%>
+<p>
+  <strong>Owner:</strong><%= @task.user.user_profile.name %>
+</p>
+<h2>Description</h2>
+<p>
+  <textarea readonly='true'><%= @task.description %></textarea>
+</p>
+<p>
+  <%= parent_link @task %>
+</p>

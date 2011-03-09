@@ -24,10 +24,18 @@ class ProjectsController < ApplicationController
     @project = @user.projects.build params[:project] 
     if(@user.save)
       @members = @project.members
-      redirect_to user_product_path(@user, @product)
+      redirect_to product_project_path(@product, @project)
     else
       render 'new'
     end
+  end
+  
+  def show
+    @taskable = @project
+    @backlog = @project.backlog
+    @user = current_user
+    @tasks = @project.tasks
+    @user_stories = @project.backlog.user_stories
   end
   
   def edit
@@ -53,7 +61,6 @@ class ProjectsController < ApplicationController
   end
   
   def destroy
-    # @project = Project.find_by_id(params[:id])
     @project.destroy
     if(params[:user_id])
       redirect_to user_projects_path
@@ -70,13 +77,13 @@ class ProjectsController < ApplicationController
       authorized_member? @product
     end
     
-    def authorized_product_member?
-      @product = Product.find_by_id(params[:id])
-      authorized_member? @product
+    def authorized_project_member?
+      @project = Project.find_by_id(params[:id])
+      authorized_member? @project
     end
 
-    def authorized_product_owner?
-      @product = Product.find_by_id(params[:id])
-      authorized_owner? @product
+    def authorized_project_owner?
+      @project = Project.find_by_id(params[:id])
+      authorized_owner? @project
     end
 end

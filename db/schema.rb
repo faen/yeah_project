@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110119171126) do
+ActiveRecord::Schema.define(:version => 20110309130152) do
+
+  create_table "acceptance_tests", :force => true do |t|
+    t.integer  "user_story_id"
+    t.boolean  "fulfilled"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "addresses", :force => true do |t|
     t.integer  "country_id"
@@ -19,6 +27,12 @@ ActiveRecord::Schema.define(:version => 20110119171126) do
     t.string   "zip"
     t.string   "street"
     t.string   "street_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "backlogs", :force => true do |t|
+    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,6 +75,15 @@ ActiveRecord::Schema.define(:version => 20110119171126) do
     t.datetime "updated_at"
   end
 
+  create_table "features", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "featurable_id"
+    t.string   "featurable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "organisations", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -77,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20110119171126) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
+    t.string   "organisation_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -109,12 +133,36 @@ ActiveRecord::Schema.define(:version => 20110119171126) do
     t.datetime "updated_at"
   end
 
+  create_table "tasks", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "fulfil_status"
+    t.integer  "taskable_id"
+    t.string   "taskable_type"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "user_profiles", :force => true do |t|
     t.integer  "user_id"
     t.string   "firstname"
     t.string   "lastname"
     t.string   "gender"
     t.date     "date_of_birth"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_stories", :force => true do |t|
+    t.string   "name"
+    t.string   "role"
+    t.string   "goal"
+    t.string   "benefit"
+    t.integer  "story_points"
+    t.integer  "priority"
+    t.integer  "feature_id"
+    t.integer  "backlog_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

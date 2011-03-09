@@ -17,7 +17,7 @@ class RealmsController < ApplicationController
     # @user = current_user --> set by before_filter
     @realm = @user.realms.build params[:realm]
     if(@user.save)
-      redirect_to user_realms_path(@user)
+      redirect_to user_realm_path(@user, @realm)
     else
       render 'new'
     end
@@ -36,18 +36,17 @@ class RealmsController < ApplicationController
     @user = current_user
     # @realm = Realm.find_by_id(params[:id]) --> set by before_filter
     if(@realm.update_attributes params[:realm])
-      
+      redirect_to user_realms_path(@user)
     else
-      
+      @realms = @user.realms
+      render 'edit'
     end
-    @realms = @user.realms
-    render 'edit'
   end
   
   def destroy
     # @user = current_user --> set by before_filter
     @realm = Realm.find_by_id(params[:id])
-    @realm.delete
+    @realm.destroy
     redirect_to user_realms_path(@user)
   end
   

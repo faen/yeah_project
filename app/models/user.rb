@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_one :email_acknowledgement, :as => :email_acknowledgeable
   has_many :realms
   has_many :products
+  has_many :tasks
   has_and_belongs_to_many :projects, :join_table => :projects_members
   
   attr_accessible :email, :email_confirmation, :password, :password_confirmation, :user_profile_attributes

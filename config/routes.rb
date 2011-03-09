@@ -15,13 +15,28 @@ YeahProject::Application.routes.draw do
     end
   end
   # resources :realms
-  resources :projects
+  
+  resources :tasks
+  resources :acceptance_tests
+  resources :user_stories do
+    resources :tasks
+    resources :acceptance_tests
+  end
+  resources :backlogs do
+    resources :user_stories
+  end
+  resources :projects do
+    resources :backlogs
+    resources :user_stories
+    resources :tasks
+  end
   resources :products do
     resources :projects
   end 
   resources :realms do
     resources :products
   end
+  
   resources :users do 
     resources :realms do
       resources :products
@@ -29,7 +44,9 @@ YeahProject::Application.routes.draw do
     resources :products do
       resources :projects
     end
-    resources :projects
+    resources :projects do
+      resources :tasks
+    end
   end
   resources :sessions
 

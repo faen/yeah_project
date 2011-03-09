@@ -1,26 +1,30 @@
 class ProductsController < ApplicationController
-  
   # before_filter :authorized_user?, :only => [:index, :new, :create]
   before_filter :authorized_realm_user?, :only => [:index, :new, :create]
   before_filter :authorized_product_member?, :only => [:show]
   before_filter :authorized_product_owner?, :only => [:edit, :update, :destroy]
   
   def index
-    @products = @user.products
+    if @realm
+      @products = @realm.products
+    else
+      @products = @user.products
+    end
   end
   
   def new
     @realms = @user.realms
     @preselected_realm = Realm.find_by_id(params[:realm_id])
-    puts "preselected_realm: #{@preselected_realm}"
     @product = @user.products.build
   end
   
   def create
     @realms = @user.realms
-    @product = @user.products.build params[:product]
-    if(@user.save)
-      redirect_to user_products_path(@user)
+    @realm = Realm.find_by_id(params[:product][:realm_id])
+    @product = @realm.products.build params[:product]
+    @user.products << @product
+    if(@realm.save)
+      redirect_to realm_product_path(@realm, @product)
     else
       render 'new'
     end
@@ -49,7 +53,7 @@ class ProductsController < ApplicationController
   end
   
   def destroy
-    @product.delete
+    @product.destroy
     redirect_to user_products_path(current_user)
   end
   

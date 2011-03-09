@@ -12,11 +12,15 @@
 #
 
 class Product < ActiveRecord::Base
-  has_many :projects
+  include StructuralItem::Model
+  
+  has_many :projects, :dependent => :destroy
   belongs_to :user
   belongs_to :realm
   
   validates :name, :presence => true
   validates :user, :presence => true
   validates :realm, :presence => true
+  
+  holder :realm
 end
