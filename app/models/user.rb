@@ -74,6 +74,11 @@ class User < ActiveRecord::Base
     self.email == "fabian.englaender@enterat.de"
   end
   
+  def name
+    return self.user_profile.name unless self.user_profile.name.blank?
+    self.email
+  end
+  
   private
     def should_validate_volatile_attributes?
       return true if self.new_record?

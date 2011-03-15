@@ -7,7 +7,7 @@
       <th>Owner</th>
       <th>Status</th>
       <th></th>
-    <tr>
+    </tr>
   </thead>
   <tbody>
     <% @tasks.each do |t| %>
@@ -22,10 +22,10 @@
           <%= t.fulfil_status%>
         </td>
         <td>
-          <%= link_to "edit", edit_project_task_path(@project, t)%>
-          <%= link_to "delete", project_task_path(@project, t), :method => :delete, :confirm => "Are you sure?"%>
+          <%= crud_links([{:index => 'edit', :path => edit_project_task_path(@project, t)},
+                          {:index => 'delete', :path => project_task_path(@project, t)}]) %>
         </td>
-      <tr>
+      </tr>
     <% end %>
   </tbody>
 </table>

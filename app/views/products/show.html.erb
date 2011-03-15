@@ -1,13 +1,16 @@
 <%= resource_browser @product%>
+<div class='h1'>
+  <span>showing product:</span><h1><%= " #{@product.name}"%></h1>
+</div>
 <h2>Projects</h2>
-<%= link_to "new project", new_product_project_path(@product)%>
-<table>
+<strong><%= link_to "new project", new_product_project_path(@product)%></strong>
+<table class='listing'>
   <thead>
     <tr>
       <th>Name</th>
       <th>Type</th>
       <th></th>
-    <tr>
+    </tr>
   </thead>
   <tbody>
     <% @projects.each do |p| %>
@@ -19,10 +22,10 @@
           <%= "(#{p.organisation_type})"%>
         </td>
         <td>
-          <%= link_to "edit", edit_product_project_path(@product, p)%>
-          <%= link_to "delete", product_project_path(@product, p), :method => :delete, :confirm => "Are you sure?"%>
+          <%= crud_links([{:index => 'edit', :path => edit_product_project_path(@product, p)},
+                          {:index => 'delete', :path => product_project_path(@product, p)}]) %>
         </td>
-      <tr>
+      </tr>
     <% end %>
   </tbody>
 </table>

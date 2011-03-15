@@ -1,10 +1,14 @@
-<%= resource_browser @realm%>
+<%#= resource_browser @realm%>
+<div class='h1'>
+  <span>showing realm:</span><h1><%= " #{@realm.name}"%></h1>
+</div>
 <h2>Products:</h2>
-<%= link_to "new product", new_realm_product_path(@realm) %>
-<table>
+<strong><%= link_to "new product", new_realm_product_path(@realm) %></strong>
+<table class='listing'>
   <thead>
     <tr>
       <th>Name</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -13,6 +17,9 @@
     <td>
       <%= link_to p.name, realm_product_path(@realm, p)%>
     </td>
+    <td>
+      <%= crud_links([{:index => 'edit', :path => edit_user_product_path(current_user, p)},
+                      {:index => 'delete', :path => user_product_path(current_user, p)}]) %>
   </tr>
 <% end %>
   </tbody>

@@ -10,7 +10,7 @@ module ApplicationHelper
   end
   
   def resource_browser target_resource
-    rb = "You are here: "
+    rb = "<p id='resource_browser'>You are here: "
     holders = target_resource.holder_chain 
     last_index = holders.count - 1
     holders.each_with_index do |h, index| 
@@ -19,6 +19,7 @@ module ApplicationHelper
       rb += link_to h.name, polymorphic_path([parent, h])
       rb += " / " if index < last_index
     end
+    rb += "</p>"
     rb.html_safe
   end
   
@@ -33,5 +34,20 @@ module ApplicationHelper
     path = polymorphic_path([ancestor, parent])
     label = "back to #{parent.class.name}"
     link_to label, path
+  end
+  
+  def crud_links links
+    cl = "<div class='crud_links'>"
+    links.each do |link|
+      path = link[:path] 
+      index = link[:index]
+      if(index == 'delete')
+        cl += link_to index, path, :class => index, :title => index, :method => :delete, :confirm => "Are you sure?"
+      else
+        cl +=  link_to index, path, :class => index, :title => index
+      end
+    end
+    cl += "</div>"
+    cl.html_safe
   end
 end

@@ -1,46 +1,43 @@
 <% submit_label = @task.new_record? ? "create" : "update" %>
-<% 
-  
-  if(@task.new_record?)
-    url = send("#{@taskable.class.name.underscore}_tasks_path", @taskable)
-    # url = @task.new_record? ? project_tasks_path(@project) : project_task_path(@project, @task)
-  else
-    url = send("#{@taskable.class.name.underscore}_task_path", @taskable, @task)
-    # url = @task.new_record? ? user_story_tasks_path(@user_story) : user_story_task_path(@user_story, @task)
-  end
-  puts("url: #{url}")
-%>
-<%= form_for @task, :url => url do |f| %>
-  <table>
-    <tr>
-      <td>
-        <%= f.label :user_id %>
-      </td>
-      <td>
-        <% 
-          options = @members.collect{|m| [m.user_profile.name, m.id] }
-          options = options_for_select(options, @preselected_member.id.to_s) if @preselected_member  
-        %>
-        <%= f.select 'user_id', options %>
-        <%#= f.text_field :user_id, :value => current_user.id %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <%= f.label :name %>
-      </td>
-      <td>
-        <%= f.text_field :name %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <%= f.label :description %>
-      </td>
-      <td>
-        <%= f.text_area :description %>
-      </td>
-    </tr>
-  </table>
-  <%= f.submit submit_label %>
-<% end %>
+<div class='form_container'>
+  <div class='form_margins'>
+    <%= form_for @task, :url => polymorphic_path([@taskable, @task]) do |f| %>
+      <div class='form_body'>
+        <table>
+          <tr>
+            <td>
+              <%= f.label :user_id %>
+            </td>
+            <td>
+              <% 
+                options = @members.collect{|m| [m.name , m.id] }
+                options = options_for_select(options, @preselected_member.id.to_s) if @preselected_member  
+              %>
+              <%= f.select 'user_id', options %>
+              <%#= f.text_field :user_id, :value => current_user.id %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= f.label :name %>
+            </td>
+            <td>
+              <%= f.text_field :name %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= f.label :description %>
+            </td>
+            <td>
+              <%= f.text_area :description %>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class='form_actions'>
+        <%= f.submit submit_label %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,27 +1,34 @@
 <% submit_label = @product.new_record? ? "create" : "update" %>
-<% url = @product.new_record? ? user_products_path(current_user) : user_product_path(current_user, @product)%>
-<%= form_for @product, :url => url do |f| %>
-  <table>
-    <tr>
-      <td>
-        Select a realm
-      </td>
-      <td>
-        <% 
-          options = @realms.collect{|r| [r.name, r.id] }
-          options = options_for_select(options, @preselected_realm.id) if @preselected_realm  
-        %>
-        <%= f.select 'realm_id', options %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <%= f.label :name %>
-      </td>
-      <td>
-        <%= f.text_field :name %>
-      </td>
-    </tr>
-  </table>
-  <%= f.submit submit_label %>
-<% end %>
+<div class='form_container'>
+  <div class='form_margins'>
+    <%= form_for @product, :url => polymorphic_path([current_user, @product]) do |f| %>
+      <div class='form_body'>
+        <table>
+          <tr>
+            <td>
+              Select a realm
+            </td>
+            <td>
+              <% 
+                options = @realms.collect{|r| [r.name, r.id] }
+                options = options_for_select(options, @preselected_realm.id) if @preselected_realm  
+              %>
+              <%= f.select 'realm_id', options %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= f.label :name %>
+            </td>
+            <td>
+              <%= f.text_field :name %>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class='form_actions'>
+        <%= f.submit submit_label %>
+      </div>
+    <% end %>
+  </div>
+</div>

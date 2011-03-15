@@ -1,62 +1,66 @@
 <% submit_label = @user_story.new_record? ? "create" : "update" %>
-<% 
-  url = polymorphic_path([@backlog, @user_story])
-%>
-<%= form_for @user_story, :url => url do |f| %>
-  <table>
-    <tr>
-      <td><%= f.label :priority%></td>
-      <td>
-        <%= f.select 'priority', (1..10) %>
-      </td>
-    </tr>
-    <tr>
-      <td><%= f.label :story_points, 'points'%></td>
-      <td>
-        <%= f.select :story_points, [1,2,3,5,8,13,21] %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <%= f.label :name %>
-      </td>
-      <td>
-        <%= f.text_field :name %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2'>As a</td>
-    </tr>
-    <tr>
-      <td>
-        <%= f.label :role %>
-      </td>
-      <td>
-        <%= f.text_field :role %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2'>i want</td>
-    </tr>
-    <tr>
-      <td>
-        <%= f.label :goal %>
-      </td>
-      <td>
-        <%= f.text_area :goal, :size => "100x5" %>
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2'>so that</td>
-    </tr>
-    <tr>
-      <td>
-        <%= f.label :benefit %>
-      </td>
-      <td>
-        <%= f.text_area :benefit, :rows => 2 %>
-      </td>
-    </tr>
-  </table>
-  <%= f.submit submit_label %>
-<% end %>
+<div class='form_container'>
+  <div class='form_margins'>
+    <%= form_for @user_story, :url => polymorphic_path([@backlog, @user_story]) do |f| %>
+      <div class='form_body'>
+        <table>
+          <tr class='align top'>
+            <td>
+              <table>
+                <tr>
+                  <td><%= f.label :name %></td>
+                  <td colspan='3'>
+                    <%= f.text_field :name %>
+                  </td>
+                </tr>
+                <tr>
+                  <td><%= f.label :priority%></td>
+                  <td>
+                    <%= f.select 'priority', (1..10) %>
+                  </td>
+                </tr>
+                <tr>
+                  <td><%= f.label :story_points, 'points'%></td>
+                  <td>
+                    <%= f.select :story_points, [1,2,3,5,8,13,21] %>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table>
+                <tr>
+                  <td>
+                    <%= f.label :role, 'As a' %>
+                  </td>
+                  <td>
+                    <%= f.text_field :role, :value => 'role' %>
+                  </td>
+                </tr>
+                <tr class='align top'>
+                  <td>
+                    <%= f.label :goal, 'i want' %>
+                  </td>
+                  <td class='align top'>
+                    <%= f.text_area :goal, :value => 'goal'%>
+                  </td>
+                </tr>
+                <tr class='align top'>
+                  <td>
+                    <%= f.label :benefit, 'so that' %>
+                  </td>
+                  <td class='align top'>
+                    <%= f.text_area :benefit, :value => 'benefit'%>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class='form_actions'>
+        <%= f.submit submit_label %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,33 +1,35 @@
 <h2>Backlog</h2>
-<%= link_to "new user story", new_backlog_user_story_path(@backlog)%>
-<table>
+<strong><%= link_to "new user story", new_backlog_user_story_path(@backlog)%></strong>
+<table class='listing'>
   <thead>
     <tr>
-      <th>Priority</th>
-      <th>Points</th>
+      <th class='v_c'>Priority</th>
+      <th class='v_c'>Points</th>
       <th>Name</th>
       <th>Story</th>
-      <th>Tests</th>
+      <th class='v_c'>Tests</th>
+      <th class='v_c'>Tasks</th>
       <th></th>
-    <tr>
+    </tr>
   </thead>
   <tbody>
     <% @backlog.user_stories.each do |s| %>
       <tr>
-        <td><%= s.priority %></td>
-        <td><%= s.story_points %></td>  
+        <td class='v_c'><%= s.priority %></td>
+        <td class='v_c'><%= s.story_points %></td>  
         <td>
           <%= link_to s.name, backlog_user_story_path(@backlog, s)%>
         </td>
         <td>
-          <%= s.story %>
+          <%= s.story_markup %>
         </td>
-        <td><%= s.acceptance_tests.count %></td>
+        <td class='v_c'><%= s.tests_count_markup %></td>
+        <td class='v_c'><%= s.tasks_count_markup %></td>
         <td>
-          <%= link_to "edit", edit_backlog_user_story_path(@backlog, s)%>
-          <%= link_to "delete", backlog_user_story_path(@backlog, s), :method => :delete, :confirm => "Are you sure?"%>
+          <%= crud_links([{:index => 'edit', :path => edit_backlog_user_story_path(@backlog, s)},
+                          {:index => 'delete', :path => backlog_user_story_path(@backlog, s)}]) %>
         </td>
-      <tr>
+      </tr>
     <% end %>
   </tbody>
 </table>

@@ -1,13 +1,15 @@
-<header>
-  <%= link_to logo, root_path %>
+<header class='clearfix'>
+  <div class='logo'>
+    <%= link_to logo, root_path %>
+  </div>
   <div class='content'>
     <nav class='round'>
       <ul>
         <% if signed_in? %>
           <li><%= link_to "Profile", user_path(current_user) %></li>
-          <li><%= link_to "Realms", user_realms_path(current_user) %></li>
+          <!-- <li><%= link_to "Realms", user_realms_path(current_user) %></li>
           <li><%= link_to "Products", user_products_path(current_user) %></li>
-          <li><%= link_to "Projects", user_projects_path(current_user) %></li>
+          <li><%= link_to "Projects", user_projects_path(current_user) %></li> -->
           <li><%= link_to "Sign out", signout_path %></li>
         <% else %>
           <li><%= link_to "Features", features_path %></li>
@@ -16,26 +18,23 @@
         <% end %>
       </ul>
     </nav>
-    <div class='clearfix'></div>
     <% if signed_in? %>
       <div class="user_info">
         <p>
           You are logged in as:<br/>
           <%= current_user.email %>
         </p>
-        <!--><nav>
-          <ul>
-            <li><%= link_to "Profile", user_path(current_user) %></li>
-            <li><%= link_to "Projects", user_projects_path(current_user) %></li>
-          </ul>
-        </nav>
-        <nav>
-          <ul>
-            <li><%= link_to "Sign out", signout_path %></li>
-          </ul>
-        </nav>
-        -->
       </div>
     <% end %>
   </div>
 </header>
+
+<nav>
+  <ul>
+    <% if signed_in? %>
+      <%= "<li class=#{controller.controller_name == 'realms' ? 'selected' : ''}>#{link_to "Realms", user_realms_path(current_user)}</li>".html_safe %>
+      <%= "<li class=#{controller.controller_name == 'products' ? 'selected' : ''}>#{link_to "Products", user_products_path(current_user)}</li>".html_safe %>
+      <%= "<li class=#{controller.controller_name == 'projects' ? 'selected' : ''}>#{link_to "Projects", user_projects_path(current_user)}</li>".html_safe %>
+    <% end %>
+  </ul>
+</nav>

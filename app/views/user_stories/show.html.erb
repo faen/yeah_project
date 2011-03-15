@@ -1,69 +1,97 @@
 <%= resource_browser @user_story%>
-<h2>Description</h2>
-<p>
-  Prio: <%= @user_story.priority%><br>
-  Points: <%= @user_story.story_points%><br><br>
-  <%= @user_story.story %></p>
+<div class='h1'>
+  <span>showing userstory: </span><h1><%= " #{@user_story.name}"%></h1>
+</div>
+<section class='cols'>
+  <div class='col_div'>
+    <div class='col_content'>
+      <h2>Description</h2>
+      <table>
+        <tr>
+          <td><strong>Story:</strong></td>
+          <td><%= @user_story.story_markup%></td>
+        </tr>
+        <tr>
+          <td><strong>Prio:</strong></td>
+          <td><%= @user_story.priority%></td>
+        </tr>
+        <tr>
+          <td><strong>Points:</strong></td>
+          <td><%= @user_story.story_points%></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
 
-<h2>Acceptance tests</h2>
-<%= link_to "new test", new_user_story_acceptance_test_path(@user_story)%>
-<table>
-  <thead>
-    <tr>
-      <th>done</th>
-      <th>description</th>
-      <th></th>
-    <tr>
-  </thead>
-  <tbody>
-    <% @acceptance_tests.each do |t| %>
-      <tr>
-        <td>
-          <%= t.fulfilled ? "yepp" : "nope" %>
-        </td>
-        <td>
-          <%= t.description%>
-        </td>
-        <td>
-          <%= link_to "edit", edit_user_story_acceptance_test_path(@user_story, t)%>
-          <%= link_to "delete", user_story_acceptance_test_path(@user_story, t), :method => :delete, :confirm => "Are you sure?"%>
-        </td>
-      <tr>
-    <% end %>
-  </tbody>
-</table>
-
-<h2>Tasks</h2>
-<%= link_to "new task", new_user_story_task_path(@user_story)%>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Owner</th>
-      <th>Status</th>
-      <th></th>
-    <tr>
-  </thead>
-  <tbody>
-    <% @tasks.each do |t| %>
-      <tr>
-        <td>
-          <%= link_to t.name, user_story_task_path(@user_story, t)%>
-        </td>
-        <td>
-          <%= t.user.user_profile.firstname if t.user%>
-        </td>
-        <td>
-          <%= t.fulfil_status%>
-        </td>
-        <td>
-          <%= link_to "edit", edit_user_story_task_path(@user_story, t)%>
-          <%= link_to "delete", user_story_task_path(@user_story, t), :method => :delete, :confirm => "Are you sure?"%>
-        </td>
-      <tr>
-    <% end %>
-  </tbody>
-</table>
+<section class='cols two clearfix'>
+  <div class='col_div left'>
+    <div class='col_content'>
+      <h2>Acceptance tests</h2>
+      <strong><%= link_to "new test", new_user_story_acceptance_test_path(@user_story)%></strong>
+      <table class='listing'>
+        <thead>
+          <tr>
+            <th>status</th>
+            <th>description</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @acceptance_tests.each do |t| %>
+            <tr>
+              <td>
+                <%= t.fulfilled ? "succeeded" : "failed" %>
+              </td>
+              <td>
+                <%= t.description%>
+              </td>
+              <td>
+                <%= crud_links([{:index => 'edit', :path => edit_user_story_acceptance_test_path(@user_story, t)},
+                                {:index => 'delete', :path => user_story_acceptance_test_path(@user_story, t)}]) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class='col_div right'>
+    <div class='col_content'>
+      <h2>Tasks</h2>
+      <strong><%= link_to "new task", new_user_story_task_path(@user_story)%></strong>
+      <table class='listing'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Owner</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tasks.each do |t| %>
+            <tr>
+              <td>
+                <%= link_to t.name, user_story_task_path(@user_story, t)%>
+              </td>
+              <td>
+                <%= t.user.user_profile.firstname if t.user%>
+              </td>
+              <td>
+                <%= t.fulfil_status%>
+              </td>
+              <td>
+                <%= crud_links([{:index => 'edit', :path => edit_user_story_task_path(@user_story, t)},
+                                {:index => 'delete', :path => user_story_task_path(@user_story, t)}]) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 <p>
   <%= parent_link @user_story %>
 </p>

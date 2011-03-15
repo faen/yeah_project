@@ -1,15 +1,22 @@
 <% submit_label = @realm.new_record? ? "create" : "update" %>
-<% url = @realm.new_record? ? user_realms_path(current_user) : user_realm_path(current_user, @realm)%>
-<%= form_for @realm, :url => url do |f| %>
-  <table>
-    <tr>
-      <td>
-        <%= f.label :name %>
-      </td>
-      <td>
-        <%= f.text_field :name %>
-      </td>
-    </tr>
-  </table>
-  <%= f.submit submit_label %>
-<% end %>
+<div class='form_container'>
+  <div class='form_margins'>
+    <%= form_for @realm, :url => polymorphic_path([current_user, @realm]) do |f| %>
+      <div class='form_body'>
+        <table>
+          <tr>
+            <td>
+              <%= f.label :name %>
+            </td>
+            <td>                                            
+              <%= f.text_field :name %>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class='form_actions'>
+        <%= f.submit submit_label %>
+      </div>
+    <% end %>
+  </div>
+</div>

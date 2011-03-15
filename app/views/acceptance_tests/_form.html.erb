@@ -1,16 +1,24 @@
 <% submit_label = @acceptance_test.new_record? ? "create" : "update" %>
-<%= form_for @acceptance_test, :url => polymorphic_url([@user_story, @acceptance_test]) do |f|%>
-  <table>
-    <tbody>
-      <tr>
-        <td><%= f.label :fulfilled %></td>
-        <td><%= f.check_box :fulfilled %></td>
-      </tr>
-      <tr>
-        <td><%= f.label :description %></td>
-        <td><%= f.text_area :description %></td>
-      </tr>
-    </tbody>
-  </table>
-  <%= f.submit submit_label %>
-<% end %>
+<div class='form_container'>
+  <div class='form_margins'>
+    <%= form_for @acceptance_test, :url => polymorphic_url([@user_story, @acceptance_test]) do |f|%>
+      <div class='form_body'>
+        <table>
+          <tbody>
+            <tr>
+              <td><%= f.label :fulfilled %></td>
+              <td><%= f.check_box :fulfilled %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :description %></td>
+              <td><%= f.text_area :description %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class='form_actions'>
+        <%= f.submit submit_label %>
+      </div>
+    <% end %>
+  </div>
+</div>

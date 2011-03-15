@@ -1,4 +1,7 @@
 <%= resource_browser @project%>
+<div class='h1'>
+  <span>showing project:</span><h1><%= " #{@project.name}"%></h1>
+</div>
 <% 
   case @project.organisation_type 
   when 'scrum_based' then template = 'scrum_type'

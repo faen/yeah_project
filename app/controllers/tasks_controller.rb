@@ -10,6 +10,7 @@ class TasksController < ApplicationController
   def new
     @members = User.all
     @task = Task.new
+    puts("members: #{@members.inspect}")
   end
   
   def create

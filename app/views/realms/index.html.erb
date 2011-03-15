@@ -1,6 +1,6 @@
 <h1>My realms</h1>
-<%= link_to "new realm", new_user_realm_path(current_user) %>
-<table>
+<strong><%= link_to "new realm", new_user_realm_path(current_user) %></strong>
+<table class='listing'>
   <thead>
     <tr>
       <th>Name</th>
@@ -18,10 +18,8 @@
       <%= r.products.collect{|p| [p.name]}.split.join(", ") %>
     </td>
     <td>
-      <% edit_path = edit_user_realm_path(current_user, r) %>
-      <% delete_path = user_realm_path(current_user, r) %>
-      <%= link_to "edit", edit_path %>
-      <%= link_to "delete", delete_path, :method => :delete, :confirm => "Are you sure?"%>
+      <%= crud_links([{:index => 'edit', :path => edit_user_realm_path(current_user, r)},
+                      {:index => 'delete', :path => user_realm_path(current_user, r)}]) %>
     </td>
   </tr>
 <% end %>

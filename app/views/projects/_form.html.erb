@@ -1,45 +1,52 @@
 <% select_product_label = @project.product.nil? ? "select a product" : @products.empty? ? "#{@project.product.name} (no other product available)" : "move to another product" %>
 <% submit_label = @project.new_record? ? "create" : "update" %>
-<% url = @project.new_record? ? user_projects_path(current_user) : user_project_path(current_user, @project)%>
-<%= form_for @project, :url => url do |f| %>
-  <table>
-    <tr>
-      <% if @products.empty? %>
-        <td colspan='2'>
-          <%= select_product_label%>
-        </td>
-      <% else %>
-        <td>
-          <%= select_product_label%>
-        </td>
-        <td>
-          <% 
-            options = @products.collect{|p| [p.name, p.id] }
-            options = options_for_select(options, @preselected_product.id.to_s) if @preselected_product  
-          %>
-          <%= f.select 'product_id', options %>
-        </td>
-      <% end %>
-    </tr>
-    <tr>
-      <td>
-        <%= f.label :name %>
-      </td>
-      <td>
-        <%= f.text_field :name %>
-      </td>
-    </tr>
-    <% if @project.new_record? %>
-      <td>
-        <%= "select organisation type:"%>
-      </td>
-      <td>
-        <% 
-          options = options_for_select(Project.organisation_types)
-        %>
-        <%= f.select 'organisation_type', options %>
-      </td>
+<div class='form_container'>
+  <div class='form_margins'>
+    <%= form_for @project, :url => polymorphic_path([current_user, @project]) do |f| %>
+      <div class='form_body'>
+        <table>
+          <tr>
+            <% if @products.empty? %>
+              <td colspan='2'>
+                <%= select_product_label%>
+              </td>
+            <% else %>
+              <td>
+                <%= select_product_label%>
+              </td>
+              <td>
+                <% 
+                  options = @products.collect{|p| [p.name, p.id] }
+                  options = options_for_select(options, @preselected_product.id.to_s) if @preselected_product  
+                %>
+                <%= f.select 'product_id', options %>
+              </td>
+            <% end %>
+          </tr>
+          <tr>
+            <td>
+              <%= f.label :name %>
+            </td>
+            <td>
+              <%= f.text_field :name %>
+            </td>
+          </tr>
+          <% if @project.new_record? %>
+            <td>
+              <%= "select organisation type:"%>
+            </td>
+            <td>
+              <% 
+                options = options_for_select(Project.organisation_types)
+              %>
+              <%= f.select 'organisation_type', options %>
+            </td>
+          <% end %>
+        </table>
+      </div>
+      <div class='form_actions'>
+        <%= f.submit submit_label %>
+      </div>
     <% end %>
-  </table>
-  <%= f.submit submit_label %>
-<% end %>
+  </div>
+</div>

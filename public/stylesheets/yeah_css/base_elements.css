@@ -1,0 +1,83 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border: none;
+	
+	font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+	color:inherit;
+  vertical-align: baseline;
+}
+
+
+/* This helps to make newer HTML5 elements behave like DIVs in older browers */ 
+article, aside, dialog, figure, footer, header,
+hgroup, nav, section {
+    display: block;
+}
+
+div {
+	overflow: auto;
+}
+
+/* */
+nav ul ,ul .no_list {
+	list-style-type: none;
+}
+
+ul .horizontal li {
+	display: inline-block;
+}
+
+a {
+	font-weight: inherit;
+  font-style: inherit;
+	text-decoration: none;
+}
+
+/* Tables still need 'cellspacing="0"' in the markup. */
+table { 
+	width: 100%;
+	border-collapse: separate; 
+	border-spacing: 0; 
+}
+/* float:none prevents the span-x classes from breaking table-cell display */
+caption, th, td { 
+	text-align: left; 
+	font-weight: normal; 
+	float:none !important; 
+	vertical-align: top; 
+	padding: 2px;
+}
+th {
+	font-weight: bold;
+}
+
+table.listing tbody tr:nth-child(even) td, table.listing tbody tr.even td{
+	background-color: #ccc;
+}
+table.listing thead{
+	background-color: #999;
+}
+
+/* Clearing floats without extra markup
+   Based on How To Clear Floats Without Structural Markup by PiE
+   [http://www.positioniseverything.net/easyclearing.html] */
+.clearfix:after, #page:after {
+  content: "\0020";
+  display: block;
+  height: 0;
+	width: 0;
+  clear: both;
+  visibility: hidden;
+	background-color: #fcf;
+  overflow:hidden;
+}
+.clearfix, .container {display: block;}
+
+/* Regular clearing
+   apply to column that should drop below previous ones. */
+.clear { clear:both; }

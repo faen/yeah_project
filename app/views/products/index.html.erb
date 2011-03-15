@@ -1,5 +1,6 @@
-<%= link_to "new product", new_user_product_path(current_user) %>
-<table>
+<h1>My products</h1>
+<strong><%= link_to "new product", new_user_product_path(current_user) %></strong>
+<table class='listing'>
   <thead>
     <tr>
       <th>name</th>
@@ -7,6 +8,7 @@
       <th></th>
     </tr>
   </thead>
+  <tbody>
 <% @products.each do |p| %>
   <tr>
     <td>
@@ -16,11 +18,10 @@
       <%= link_to p.realm.name, user_realm_path(current_user, p.realm) %>
     </td>
     <td>
-      <% edit_path = @user.nil? ? edit_project_path(p) : edit_user_project_path(current_user, p) %>
-      <% delete_path = @user.nil? ? project_path(p) : user_project_path(current_user, p) %>
-      <%= link_to "edit", edit_user_product_path(current_user, p) %>
-      <%= link_to "delete", user_product_path(current_user, p), :method => :delete, :confirm => "Are you sure?"%>
+      <%= crud_links([{:index => 'edit', :path => edit_user_product_path(current_user, p)},
+                      {:index => 'delete', :path => user_product_path(current_user, p)}]) %>
     </td>
   </tr>
 <% end %>
+  </tbody>
 </table>
