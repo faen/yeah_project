@@ -1,0 +1,46 @@
+<section class='cols'>
+  <div class='col_div'>
+    <div class='col_content'>
+      <div class='h_div'>
+        <h2>Backlog</h2>
+        <%= crud_links([{:index => 'edit', :path => edit_polymorphic_path([@backlog.project, @backlog])}]) %>
+      </div>
+      <strong><%= link_to "new user story", new_backlog_user_story_path(@backlog)%></strong>
+      <table class='listing'>
+        <thead>
+          <tr>
+            <th class='v_c'>Priority</th>
+            <th class='v_c'>Points</th>
+            <th class='v_c'>on Sprint?</th>
+            <th>Name</th>
+            <th>Story</th>
+            <th class='v_c'>Tests</th>
+            <th class='v_c'>Tasks</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @backlog.user_stories.each do |s| %>
+            <tr>
+              <td class='v_c'><%= s.priority %></td>
+              <td class='v_c'><%= s.story_points %></td>
+              <td class='v_c'><%= s.sprint ? "Yes" : "No"%></td> 
+              <td>
+                <%= link_to s.name, backlog_user_story_path(@backlog, s)%>
+              </td>
+              <td>
+                <%= s.story_markup %>
+              </td>
+              <td class='v_c'><%= s.tests_count_markup %></td>
+              <td class='v_c'><%= s.tasks_count_markup %></td>
+              <td>
+                <%= crud_links([{:index => 'edit', :path => edit_backlog_user_story_path(@backlog, s)},
+                                {:index => 'delete', :path => backlog_user_story_path(@backlog, s)}]) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

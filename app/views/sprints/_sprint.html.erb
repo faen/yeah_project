@@ -1,0 +1,45 @@
+<section class='cols'>
+  <div class='col_div'>
+    <div class='col_content'>
+      <div class='h_div'>
+        <h2><%= @sprint.is_current? ? "Current sprint: " : "Sprint ##{@sprint.sprint_nr}"%></h2>
+        <span><%= @sprint.is_current? ? "Sprint ##{@sprint.sprint_nr}" : ""%></span>
+      </div>
+      <p>from: <%= @sprint.start_date %> to: <%= @sprint.end_date %></p>
+      <h3>userstories:</h3>
+      <table class='listing'>
+        <thead>
+          <tr>
+            <th class='v_c'>Priority</th>
+            <th class='v_c'>Points</th>
+            <th>Name</th>
+            <th>Story</th>
+            <th class='v_c'>Tests</th>
+            <th class='v_c'>Tasks</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sprint.user_stories.each do |s| %>
+            <tr>
+              <td class='v_c'><%= s.priority %></td>
+              <td class='v_c'><%= s.story_points %></td>  
+              <td>
+                <%= link_to s.name, backlog_user_story_path(@sprint.backlog, s)%>
+              </td>
+              <td>
+                <%= s.story_markup %>
+              </td>
+              <td class='v_c'><%= s.tests_count_markup %></td>
+              <td class='v_c'><%= s.tasks_count_markup %></td>
+              <!-- <td>
+                <%= crud_links([{:index => 'edit', :path => edit_backlog_user_story_path(@sprint.backlog, s)},
+                                {:index => 'delete', :path => backlog_user_story_path(@sprint.backlog, s)}]) %>
+              </td> -->
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

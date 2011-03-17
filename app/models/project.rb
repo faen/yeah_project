@@ -22,6 +22,7 @@ class Project < ActiveRecord::Base
   belongs_to :statusable
   belongs_to :product
   has_one :backlog, :dependent => :destroy
+  has_many :sprints, :through => :backlog
   has_many :features, :as => :featurable, :dependent => :destroy
   has_many :tasks, :as => :taskable, :dependent => :destroy
   has_and_belongs_to_many :members, :class_name => "User", 

@@ -1,35 +1,71 @@
-<h2>Backlog</h2>
-<strong><%= link_to "new user story", new_backlog_user_story_path(@backlog)%></strong>
-<table class='listing'>
-  <thead>
-    <tr>
-      <th class='v_c'>Priority</th>
-      <th class='v_c'>Points</th>
-      <th>Name</th>
-      <th>Story</th>
-      <th class='v_c'>Tests</th>
-      <th class='v_c'>Tasks</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @backlog.user_stories.each do |s| %>
-      <tr>
-        <td class='v_c'><%= s.priority %></td>
-        <td class='v_c'><%= s.story_points %></td>  
-        <td>
-          <%= link_to s.name, backlog_user_story_path(@backlog, s)%>
-        </td>
-        <td>
-          <%= s.story_markup %>
-        </td>
-        <td class='v_c'><%= s.tests_count_markup %></td>
-        <td class='v_c'><%= s.tasks_count_markup %></td>
-        <td>
-          <%= crud_links([{:index => 'edit', :path => edit_backlog_user_story_path(@backlog, s)},
-                          {:index => 'delete', :path => backlog_user_story_path(@backlog, s)}]) %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render '/backlogs/backlog'%>
+<% if @current_sprint %>
+  <% @sprint = @current_sprint %>
+  <%= render '/sprints/sprint'%>
+<% else %>
+  <section class='cols'>
+    <div class='col_div'>
+      <div class='col_content'>
+        <h2>Current sprint</h2>
+        <p>No current sprint set</p>
+      </div>
+    </div>
+  </section>
+<% end %>
+
+<section class='cols two clearfix'>
+  <div class='col_div left'>
+    <div class='col_content'>
+      <h2>Future Sprints</h2>
+      <strong><%= link_to "new sprint", new_backlog_sprint_path(@backlog)%></strong>
+      <table class='listing'>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Start</th>
+            <th>End</th>
+            <th></th>
+          </tr>
+        <thead>
+        <tbody>
+          <% if @future_sprints %>
+            <% @future_sprints.each do |s| %>
+              <tr>
+                <td><%= s.sprint_nr %></td>
+                <td><%= s.start_date %></td>
+                <td><%= s.end_date %></td>
+                <td>
+                  <%= crud_links([{:index => 'edit', :path => edit_backlog_sprint_path(@backlog, s)},
+                                  {:index => 'delete', :path => backlog_sprint_path(@backlog, s)}]) %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class='col_div right'>
+    <div class='col_content'>
+      <h2>Sprints History</h2>
+      <table class='listing'>
+        <thead>
+          <tr>
+            <th>Start</th>
+            <th>End</th>
+          </tr>
+        <thead>
+        <tbody>
+          <% if @history_sprints %>
+            <% @history_sprints.each do |s| %>
+              <tr>
+                <td><%= s.start_date%></td>
+                <td><%= s.end_date%></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

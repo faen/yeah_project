@@ -25,6 +25,18 @@
                     <%= f.select :story_points, [1,2,3,5,8,13,21] %>
                   </td>
                 </tr>
+                <tr>
+                  <td><%= f.label :sprint_id, 'add to sprint'%></td>
+                  <td>
+                    <% 
+                      cs = @backlog.current_sprint
+                      options = [["none"], [cs.name, cs.id]]
+                      options += @backlog.future_sprints.collect{|s| [s.name, s.id]} 
+                      
+                    %>
+                    <%= f.select :sprint_id, options_for_select(options) %>
+                  </td>
+                </tr>
               </table>
             </td>
             <td>

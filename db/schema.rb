@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110309130152) do
+ActiveRecord::Schema.define(:version => 20110315215540) do
 
   create_table "acceptance_tests", :force => true do |t|
     t.integer  "user_story_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20110309130152) do
 
   create_table "backlogs", :force => true do |t|
     t.integer  "project_id"
+    t.integer  "default_sprint_weeks", :default => 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -133,6 +134,15 @@ ActiveRecord::Schema.define(:version => 20110309130152) do
     t.datetime "updated_at"
   end
 
+  create_table "sprints", :force => true do |t|
+    t.integer  "sprint_nr"
+    t.integer  "backlog_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tasks", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -163,6 +173,7 @@ ActiveRecord::Schema.define(:version => 20110309130152) do
     t.integer  "priority"
     t.integer  "feature_id"
     t.integer  "backlog_id"
+    t.integer  "sprint_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

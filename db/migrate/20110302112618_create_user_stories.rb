@@ -10,6 +10,7 @@ class CreateUserStories < ActiveRecord::Migration
       t.integer :feature_id
       
       t.integer :backlog_id
+      t.integer :sprint_id
       
       t.timestamps
     end

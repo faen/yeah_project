@@ -27,6 +27,7 @@ class UserStoriesController < ApplicationController
   
   def edit
     @user_story = UserStory.find_by_id(params[:id])
+    @backlog = @user_story.backlog
     @acceptance_tests = @user_story.acceptance_tests
   end
   

@@ -1,0 +1,21 @@
+<div class='form_container'>
+  <div class='form_margins'>
+    <%= form_for @backlog, :url => polymorphic_path([@backlog.project, @backlog]) do |f|%>
+      <div class='form_body'>
+        <table class='form'>
+          <tbody>
+            <tr>
+              <td><%= f.label :default_sprint_weeks %></td>
+              <td>
+                <%= f.select :default_sprint_weeks, (1..4)%> weeks
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class='form_actions'>
+        <%= f.submit "update" %>
+      </div>
+    <% end %>
+  </div>
+</div>

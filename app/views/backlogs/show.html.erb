@@ -1,7 +1,7 @@
-<div class='h1'>
-  <span>showing backlog for project:</span><h1><%= " #{@backlog.project.name}"%></h1>
+<div class='h_div h1'>
+  <span>showing Backlog for project:</span><h1><%= " #{@backlog.project.name}"%></h1>
 </div>
-<%= render 'projects/scrum_type' %>
+<%= render 'backlog' %>
 <p>
   <%= parent_link @backlog %>
 </p>

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110309130152
+# Schema version: 20110315215540
 #
 # Table name: user_stories
 #
@@ -12,6 +12,7 @@
 #  priority     :integer
 #  feature_id   :integer
 #  backlog_id   :integer
+#  sprint_id    :integer
 #  created_at   :datetime
 #  updated_at   :datetime
 #
@@ -19,6 +20,7 @@
 class UserStory < ActiveRecord::Base
   include StructuralItem::Model
   belongs_to :backlog
+  belongs_to :sprint
   has_many :tasks, :as => :taskable, :dependent => :destroy
   has_many :acceptance_tests, :dependent => :destroy
   
@@ -44,11 +46,12 @@ class UserStory < ActiveRecord::Base
     succeeded = acceptance_tests.map{|t| t if t.fulfilled}.compact.count
     open = acceptance_tests.map{|t| t if t.fulfilled.blank?}.compact.count
     failed = acceptance_tests.map{|t| t if !t.fulfilled}.compact.count
-    puts "inspect open: #{acceptance_tests.collect{|t| t if t.fulfilled.blank?}.inspect}"
-    puts "tests_count_markup\r\n  succeeded: #{succeeded}\r\n  open: #{open}\r\n  failed 1: #{failed}"
     failed = failed - open
-    puts "  failed 2: #{failed}"
     tc = "<span style='color:#009036;'>#{succeeded}</span> | <span style='color:#e2001a;'>#{failed}</span> | <span>#{open}</span>"
     tc.html_safe
+  end
+  
+  def on_sprint?
+    self.sprint ? "yes" : "no"
   end
 end

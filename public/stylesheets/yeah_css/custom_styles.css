@@ -179,6 +179,7 @@ table.listing tbody tr:nth-child(odd) td{
 }
 table.listing .crud_links{
 	float:right;
+	overflow: visible;
 }
 
 .crud_links a{

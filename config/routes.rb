@@ -24,6 +24,7 @@ YeahProject::Application.routes.draw do
   end
   resources :backlogs do
     resources :user_stories
+    resources :sprints
   end
   resources :projects do
     resources :backlogs

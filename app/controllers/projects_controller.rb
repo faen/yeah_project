@@ -6,19 +6,16 @@ class ProjectsController < ApplicationController
   before_filter :authorized_project_owner?, :only => [:edit, :update, :destroy]
   
   def index
-    # @user = User.find_by_id(params[:user_id])
     @projects = @user.projects
   end
   
   def new
     @preselected_product = Product.find_by_id(params[:product_id])
-    # @user = current_user
     @products = @user.products
     @project = @user.projects.build
   end
   
   def create
-    # @user = current_user
     @products = @user.products
     @product = Product.find_by_id(params[:project][:product_id])
     @project = @user.projects.build params[:project] 
@@ -33,6 +30,10 @@ class ProjectsController < ApplicationController
   def show
     @taskable = @project
     @backlog = @project.backlog
+    @sprints = @project.sprints
+    @current_sprint = @backlog.current_sprint
+    @future_sprints = @backlog.future_sprints
+    @history_sprints = @backlog.history_sprints
     @user = current_user
     @tasks = @project.tasks
     @user_stories = @project.backlog.user_stories
@@ -41,8 +42,7 @@ class ProjectsController < ApplicationController
   def edit
     @user = current_user
     @products = @user.products
-    # @project = Project.find_by_id(params[:id])
-    @products.delete @project.product
+    # @products.delete @project.product
     @members = @project.members
   end
   
@@ -61,12 +61,10 @@ class ProjectsController < ApplicationController
   end
   
   def destroy
+    @product = @project.product
+    @realm = @product.realm
     @project.destroy
-    if(params[:user_id])
-      redirect_to user_projects_path
-    else
-      redirect_to projects_path
-    end
+    redirect_to realm_product_path(@realm, @product)
   end
   
   private 
