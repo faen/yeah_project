@@ -35,7 +35,7 @@ module SessionsHelper
     if(authenticate)
       success = is_super_admin?
       sign_out unless success
-      return success
+      success
     end
     false
   end
@@ -53,8 +53,8 @@ module SessionsHelper
   
   def authorized_member? (scope)
     return true if authorized_owner? (scope)
-    if(scope.users)
-      return scope.users.include?(current_user)
+    if(scope.assigned_users)
+      return scope.assigned_users.include?(current_user)
     end
     redirect_to root_path
   end

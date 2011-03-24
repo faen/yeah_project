@@ -1,0 +1,5 @@
+<%= @user.email %>
+You have been invited to join on YEAHproject!
+
+Please follow the link below to finish your registration:
+<%= confirm_url(:host => 'localhost:3000', :token => @user.email_acknowledgement.token) %>

@@ -42,6 +42,30 @@
               <%= f.select 'organisation_type', options %>
             </td>
           <% end %>
+          <tr>
+            <td>
+              Select members:
+            </td>
+            <td></td>
+          </tr>
+          <%
+              product = @project.product || @preselected_product
+            if product
+              users_for_select = product.realm.crowd
+              users_for_select.each do |u|
+          %>
+            <tr>
+              <td>
+                <%= u.name %>
+              </td>
+              <td>
+                <%= check_box_tag 'project[assigned_users][]', u.id, @project_members.include?(u) %>
+              </td>
+            </tr>
+          <% 
+              end 
+            end
+          %>
         </table>
       </div>
       <div class='form_actions'>

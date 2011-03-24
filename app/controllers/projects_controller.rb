@@ -1,26 +1,30 @@
 class ProjectsController < ApplicationController
   
   # before_filter :authorized_user?, :only => [:index, :new, :create]
-  before_filter :authorized_product_user?, :only => [:index, :new, :create]
-  before_filter :authorized_project_member?, :only => [:show]
-  before_filter :authorized_project_owner?, :only => [:edit, :update, :destroy]
+  # before_filter :authorized_product_user?, :only => [:index, :new, :create]
+  # before_filter :authorized_project_member?, :only => [:show]
+  # before_filter :authorized_project_owner?, :only => [:edit, :update, :destroy]
   
   def index
+    @user = current_user
     @projects = @user.projects
+    @assigned_projects = @user.assigned_projects
   end
   
   def new
+    @user = current_user
     @preselected_product = Product.find_by_id(params[:product_id])
     @products = @user.products
     @project = @user.projects.build
+    @project_members = @project.assigned_users
   end
   
   def create
+    @user = current_user
     @products = @user.products
     @product = Product.find_by_id(params[:project][:product_id])
     @project = @user.projects.build params[:project] 
-    if(@user.save)
-      @members = @project.members
+    if(current_user.save)
       redirect_to product_project_path(@product, @project)
     else
       render 'new'
@@ -28,6 +32,8 @@ class ProjectsController < ApplicationController
   end
   
   def show
+    @project = Project.find_by_id(params[:id])
+    @project_members = @project.assigned_users
     @taskable = @project
     @backlog = @project.backlog
     @sprints = @project.sprints
@@ -37,30 +43,32 @@ class ProjectsController < ApplicationController
     @user = current_user
     @tasks = @project.tasks
     @user_stories = @project.backlog.user_stories
+    
+    @assigned_users = @project.crowd
   end
   
   def edit
+    @project = Project.find_by_id(params[:id])
+    @project_members = @project.crowd
     @user = current_user
     @products = @user.products
-    # @products.delete @project.product
-    @members = @project.members
   end
   
   def update
-    @user = current_user
-    @products = @user.products
-    # @project = Project.find_by_id(params[:id])
-    @products.delete @project.product
-    @members = @project.members
+    params[:project][:assigned_users] ||= []
+    @project = Project.find_by_id(params[:id])
     if(@project.update_attributes params[:project])
-      
+      redirect_to edit_project_path(@project)
     else
-      
+      @project_members = @project.crowd
+      @user = current_user
+      @products = @user.products
+      render 'edit'
     end
-    render 'edit'
   end
   
   def destroy
+    @project = Project.find_by_id(params[:id])
     @product = @project.product
     @realm = @product.realm
     @project.destroy

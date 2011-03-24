@@ -48,6 +48,13 @@ YeahProject::Application.routes.draw do
     resources :projects do
       resources :tasks
     end
+    member do
+      get 'new_assignment', 'edit_assignments'
+      post 'create_assignment'
+    end
+    collection do
+      put 'create_credentials'
+    end
   end
   resources :sessions
 

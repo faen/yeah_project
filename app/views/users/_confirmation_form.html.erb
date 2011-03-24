@@ -1,21 +1,14 @@
-<%= form_for @user do |f| %>
+<%= form_for @user, :url => url_for(:controller => 'users', :action => 'create_credentials') do |f| %>
   <%= render :partial => 'shared/error_messages', :locals => {:object => @user} %>
+  <%= hidden_field_tag :token, @ack.token%>
   <div>
-    <%= f.label :email%><br/>
-    <%= f.text_field :email %>
-  </div>
-  <div>
-    <%= f.label :email_confirmation%><br/>
-    <%= f.text_field :email_confirmation %>
-  </div>
-  <!-- <div>
     <%= f.label :password%><br/>
     <%= f.password_field :password, :autocomplete => "off" %>
   </div>
   <div>
     <%= f.label :password_confirmation%><br/>
     <%= f.password_field :password_confirmation, :autocomplete => "off" %>
-  </div> -->
+  </div>
   <div>
     <%= f.submit "Sign up"%>
   </div>

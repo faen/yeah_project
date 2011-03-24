@@ -1,10 +1,8 @@
-<h1>Your signup confirmation</h1>
-<% e_ack = @user.email_acknowledgement %>
+<h1>Your assignment confirmation</h1>
+<% e_ack = @assignment_user.email_acknowledgement %>
 <% if e_ack.pending? %>
   <p>
-    We've sent an email to the account you entered when signing up.<br/>
-    Please check your emails and follow the instructions to finally activate your account.<br/>
-    Thanks!
+    I've sent an email to the account you entered when assigning the user.<br/>
   </p>
 <% elsif e_ack.acknowledged? %>
   <% if(initial) %>
@@ -12,11 +10,7 @@
       Your email address <%= @user.email %> has been confirmed.</br>
     <p/>
     <p>
-      Please enter your desired password:
-    </p>
-    <p>
-      <%#= render 'sessions/form'%>
-      <%= render 'confirmation_form'%>
+      <%= render 'sessions/form'%>
     </p>
   <% else %>
     <p>

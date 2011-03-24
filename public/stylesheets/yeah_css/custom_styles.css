@@ -70,6 +70,7 @@ header nav a{
 	margin: 0px 5px;
 }
 header .user_info{
+	margin: 2px 10px;
 	float:right;
 	color: #fff;
 }
@@ -137,17 +138,23 @@ header .user_info{
 
 .cols.two .col_div{
 	width: 49%;
-/*	background-color: #f2f2e2;*/
 }
+
+.cols.three .col_div{
+	width: 32%;
+}
+
 .col_div.left{
 	float:left;
+}
+.col_div.center{
+	float:right;
+	margin:0 2%;
 }
 .col_div.right{
 	float:right;
 }
-.cols.two .col_content{
-	/*margin: 0px 10px 10px 10px;*/
-}
+
 
 th.v_c, td.v_c{
 	text-align: center;
@@ -184,7 +191,7 @@ table.listing .crud_links{
 
 .crud_links a{
 	vertical-align: middle;
-	font-size: 0em;
+	text-indent: -10000px;
 	display: inline-block;
 	background-repeat: no-repeat;
 	height: 14px;
@@ -202,6 +209,8 @@ table.listing .crud_links{
 	width:100%;
 	padding: 1px 0px;
 	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+  border-radius: 5px;
 	background-color: #e6e9e6;
 }
 .form_margins{
@@ -210,6 +219,8 @@ table.listing .crud_links{
 .form_body{
 	border: 2px solid #c7cb95;
 	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+  border-radius: 5px;
 /*	background-color: #e6e9e6;*/
 }
 .form_actions{

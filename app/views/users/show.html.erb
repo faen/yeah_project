@@ -1,8 +1,56 @@
-<h1>showing user <%= @user.email %></h1>
-<%= link_to "edit my profile", edit_user_path(@user)%>
-<br>
-<%= link_to "my realms", user_realms_path(@user)%>
-<br>
-<%= link_to "my products", user_products_path(@user)%>
-<br>
-<%= link_to "my projects", user_projects_path(@user)%>
+<h1>Dashboard</h1>
+<section class='cols three clearfix'>
+  <div class='col_div left'>
+    <div class='col_content'>
+      <h2><%= link_to "My realms", user_realms_path(@user)%></h2>
+      <strong>owned</strong>
+      <ul>
+      <% @user.realms.each do |r| %>
+        <li><%= "#{r.name}" %></li>
+      <% end %>
+      </ul>
+      <strong>assigned</strong>
+      <ul>
+      <% @user.assigned_realms.each do |a| %>
+        <li><%= "#{a.name}" %></li>
+      <%end%>
+      </ul>
+    </div>
+  </div>
+  
+  <div class='col_div right'>
+    <div class='col_content'>
+      <h2><%= link_to "My projects", user_projects_path(@user)%></h2>
+      <strong>owned</strong>
+      <ul>
+      <% @user.projects.each do |p| %>
+        <li><%= "#{p.name}" %></li>
+      <% end %>
+      </ul>
+      <strong>assigned</strong>
+      <ul>
+      <% @user.assigned_projects.each do |a| %>
+        <li><%= "#{a.name}" %></li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+  
+  <div class='col_div center'>
+    <div class='col_content'>
+      <h2><%= link_to "My products", user_products_path(@user)%></h2>
+      <strong>owned</strong>
+      <ul>
+      <% @user.products.each do |p| %>
+        <li><%= "#{p.name}" %></li>
+      <% end %>
+      </ul>
+      <strong>assigned</strong>
+      <ul>
+      <% @user.assigned_products.each do |a| %>
+        <li><%= "#{a.name}" %></li>
+      <%end%>
+      </ul>
+    </div>
+  </div>
+</section>

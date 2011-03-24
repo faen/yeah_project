@@ -1,6 +1,9 @@
-<%= render 'form'%>
-<div>
-  <%@members.each do |member|%>
-    <p><%= member.email %></p>
-  <% end %>
+<div class='h_div h1'>
+  <h1>Edit project</h1><span>&nbsp;&nbsp;<%= @project.name%></span>
 </div>
+<div>
+  <span><%= link_to "show project", project_path(@project)%></span>
+  &nbsp;|&nbsp;
+  <span><%= link_to "list projects", projects_path%></span>
+</div>
+<%= render 'form'%>

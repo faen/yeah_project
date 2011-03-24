@@ -25,9 +25,11 @@ class Project < ActiveRecord::Base
   has_many :sprints, :through => :backlog
   has_many :features, :as => :featurable, :dependent => :destroy
   has_many :tasks, :as => :taskable, :dependent => :destroy
-  has_and_belongs_to_many :members, :class_name => "User", 
-                                    :association_foreign_key => "user_id", 
-                                    :join_table => "projects_members"
+  has_many :assignments, :as => :assignable
+  has_many :assigned_users, :through => :assignments, :source => :user
+  # has_and_belongs_to_many :members, :class_name => "User", 
+  #                                   :association_foreign_key => "user_id", 
+  #                                   :join_table => "projects_members"
   
   
   validates :name, :presence => true
@@ -39,6 +41,18 @@ class Project < ActiveRecord::Base
   
   def realm
     product.realm
+  end
+  
+  def crowd
+    assigned_users
+  end
+  
+  def assigned_users= assigned_users_hash
+    self.assignments.destroy_all
+    assigned_users_hash.each do |u_id|
+      u = User.find(u_id)
+      self.assignments.build(:user => u)
+    end
   end
   
   def self.organisation_types

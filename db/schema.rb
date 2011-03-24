@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110315215540) do
+ActiveRecord::Schema.define(:version => 20110318100536) do
 
   create_table "acceptance_tests", :force => true do |t|
     t.integer  "user_story_id"
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(:version => 20110315215540) do
     t.string   "zip"
     t.string   "street"
     t.string   "street_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "assignments", :force => true do |t|
+    t.integer  "assignable_id"
+    t.string   "assignable_type"
+    t.integer  "user_id"
+    t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

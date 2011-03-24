@@ -20,12 +20,47 @@ class User < ActiveRecord::Base
   has_one :email_acknowledgement, :as => :email_acknowledgeable
   has_many :realms
   has_many :products
+  has_many :projects
   has_many :tasks
-  has_and_belongs_to_many :projects, :join_table => :projects_members
+  has_many :assignments
   
-  attr_accessible :email, :email_confirmation, :password, :password_confirmation, :user_profile_attributes
-  attr_accessor :password, :current_password
+  def assigned_realms
+    assignments.where("assignable_type = 'Realm'").map{|a| a.assignable}
+  end
+  
+  def assigned_products
+    assignments.where("assignable_type = 'Product'").map{|a| a.assignable}
+  end
+  
+  def assigned_projects
+    assignments.where("assignable_type = 'Project'").map{|a| a.assignable}
+  end
+  
+  def assignables
+    assignments.map{|a| a.assignable}
+  end
+  
+  def assignments= assignments_hash
+    assigned_assignables = self.assignables
+    self.assignments.destroy_all
+    if assignments_hash
+      assignments_hash.each do |a|
+        group_class = a.first.singularize.capitalize.constantize
+        a.second.each do |id|
+          assignable = group_class.find(id)
+          assignment = self.assignments.build(:assignable => assignable)
+        end
+      end
+    end
+  end
+  
+  # has_and_belongs_to_many :projects, :join_table => :projects_members
+  # scope :projects, :assignables.where("assignable_type = 'Project'")
+  
+  attr_accessible :email, :email_confirmation, :password, :password_confirmation, :user_profile_attributes, :assignments
+  attr_accessor :password, :password_confirmation, :current_password
   accepts_nested_attributes_for :user_profile
+  # accepts_nested_attributes_for :assignments
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   pwd_regex = /\A[\w\d\!-]{6,12}\z/i
@@ -35,10 +70,10 @@ class User < ActiveRecord::Base
                     :confirmation => true,
                     :uniqueness => {:case_sensitive => false}
   
-  validates :password, :presence => true,
-                       :format => {:with => pwd_regex },
-                       :confirmation => true,
-                       :if => :should_validate_volatile_attributes?
+  # validates :password, :presence => true,
+  #                      :format => {:with => pwd_regex },
+  #                      :confirmation => true,
+  #                      :if => :should_validate_volatile_attributes?
 
   before_save :create_encrypted_password, :if => lambda { !self.password.nil? }
   before_create :create_email_acknowledgement
@@ -85,7 +120,8 @@ class User < ActiveRecord::Base
     end
     
     def create_encrypted_password
-      self.salt = create_salt if self.new_record?
+      puts "create_encrypted_password, salt: #{self.salt}, !salt: #{ !self.salt}, salt.nil?: #{self.salt.nil?}"
+      self.salt = create_salt if !self.salt
       self.encrypted_password = encrypt_password(self.password)
     end
     

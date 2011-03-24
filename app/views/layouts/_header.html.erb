@@ -3,11 +3,11 @@
     <%= link_to logo, root_path %>
   </div>
   <div class='content'>
-    <nav class='round'>
+    <nav>
       <ul>
         <% if signed_in? %>
-          <li><%= link_to "Profile", user_path(current_user) %></li>
-          <!-- <li><%= link_to "Realms", user_realms_path(current_user) %></li>
+          <!-- <li><%= link_to "Profile", user_path(current_user) %></li>
+          <li><%= link_to "Realms", user_realms_path(current_user) %></li>
           <li><%= link_to "Products", user_products_path(current_user) %></li>
           <li><%= link_to "Projects", user_projects_path(current_user) %></li> -->
           <li><%= link_to "Sign out", signout_path %></li>
@@ -20,10 +20,7 @@
     </nav>
     <% if signed_in? %>
       <div class="user_info">
-        <p>
-          You are logged in as:<br/>
-          <%= current_user.email %>
-        </p>
+          <span>You are logged in as: <%= current_user.email %></span>
       </div>
     <% end %>
   </div>
@@ -32,6 +29,8 @@
 <nav>
   <ul>
     <% if signed_in? %>
+      <%= "<li class=#{controller.controller_name == 'users' && controller.action_name == 'show'? 'selected' : ''}>#{link_to "Dashboard", user_path(current_user)}</li>".html_safe %>
+      <%= "<li class=#{controller.controller_name == 'users' && controller.action_name == 'edit'? 'selected' : ''}>#{link_to "Profile", edit_user_path(current_user)}</li>".html_safe %>
       <%= "<li class=#{controller.controller_name == 'realms' ? 'selected' : ''}>#{link_to "Realms", user_realms_path(current_user)}</li>".html_safe %>
       <%= "<li class=#{controller.controller_name == 'products' ? 'selected' : ''}>#{link_to "Products", user_products_path(current_user)}</li>".html_safe %>
       <%= "<li class=#{controller.controller_name == 'projects' ? 'selected' : ''}>#{link_to "Projects", user_projects_path(current_user)}</li>".html_safe %>

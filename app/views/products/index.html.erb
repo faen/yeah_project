@@ -3,8 +3,9 @@
 <table class='listing'>
   <thead>
     <tr>
-      <th>name</th>
-      <th>realm</th>
+      <th>Name</th>
+      <th>Realm</th>
+      <th>Projects</th>
       <th></th>
     </tr>
   </thead>
@@ -18,7 +19,45 @@
       <%= link_to p.realm.name, user_realm_path(current_user, p.realm) %>
     </td>
     <td>
+      <%= p.projects.collect{|p| [p.name]}.split.join(", ") %>
+    </td>
+    <td>
       <%= crud_links([{:index => 'edit', :path => edit_user_product_path(current_user, p)},
+                      {:index => 'delete', :path => user_product_path(current_user, p)}]) %>
+    </td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+
+<h1>Assigned products</h1>
+<table class='listing'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Realm</th>
+      <th>Projects</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<% @assigned_products.each do |p| %>
+  <tr>
+    <td>
+      <%= link_to p.name, realm_product_path(p.realm, p) %>
+    </td>
+    <td>
+      <%= p.user.name %>
+    </td>
+    <td>
+      <%= link_to p.realm.name, user_realm_path(current_user, p.realm) %>
+    </td>
+    <td>
+      <%= p.projects.collect{|p| [p.name]}.split.join(", ") %>
+    </td>
+    <td>
+      <%#= crud_links([{:index => 'edit', :path => edit_user_product_path(current_user, p)},
                       {:index => 'delete', :path => user_product_path(current_user, p)}]) %>
     </td>
   </tr>

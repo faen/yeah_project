@@ -1,0 +1,49 @@
+<div class='form_container'>
+  <div class='form_margins'>
+    <% 
+      url = @assignment_user.new_record? ? create_assignment_user_path : user_path(@assignment_user) 
+      submit_label = @assignment_user.new_record? ? "Send invitation" : "update assignments"
+    %>
+    <%= form_for @assignment_user, :url => url do |f| %>
+      <%= render :partial => 'shared/error_messages', :locals => {:object => @assignment_user} %>
+      <div class='form_body'>
+        <table class='form'>
+          <tbody>
+            <% if @assignment_user.new_record? %>
+              <tr>
+                <td><%= f.label :email %></td>
+                <td><%= f.text_field:email %>
+              </tr>
+            <% else %>
+              <%= f.hidden_field :name %>
+            <% end %>
+            <% current_user.realms.each do |r| %>
+            <tr>
+              <td><%= "#{r.name}: "%></td>
+              <td><%= check_box_tag 'user[assignments][realms][]', r.id,
+                      @user_assignables.include?(r) %></td>
+            </tr>
+              <% r.products.each do |p| %>
+                <tr>
+                  <td>&nbsp;&nbsp;<%= "#{p.name}: " %></td>
+                  <td><%= check_box_tag 'user[assignments][products][]', p.id, 
+                          @user_assignables.include?(p) %></td>
+                </td>
+                <% p.projects.each do |pr| %>
+                  <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;<%= "#{pr.name}: " %></td>
+                    <td><%= check_box_tag 'user[assignments][projects][]', pr.id,
+                            @user_assignables.include?(pr) %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <%= f.submit submit_label%>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,26 +1,63 @@
-<%#= resource_browser @realm%>
 <div class='h_div h1'>
-  <span>showing realm:</span><h1><%= " #{@realm.name}"%></h1>
+  <h1>Showing realm</h1><span>&nbsp;&nbsp;<%= @realm.name%></span>
+  <%= crud_links([{:index => 'edit', :path => edit_realm_path(@realm)}])%>
 </div>
-<h2>Products:</h2>
-<strong><%= link_to "new product", new_realm_product_path(@realm) %></strong>
-<table class='listing'>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<% @products.each do |p|%>
-  <tr>
-    <td>
-      <%= link_to p.name, realm_product_path(@realm, p)%>
-    </td>
-    <td>
-      <%= crud_links([{:index => 'edit', :path => edit_user_product_path(current_user, p)},
-                      {:index => 'delete', :path => user_product_path(current_user, p)}]) %>
-  </tr>
-<% end %>
-  </tbody>
-</table>
+<section class='cols two clearfix'>
+  <div class='col_div left'>
+    <div class='col_content'>
+      <h2>Products:</h2>
+      <strong><%= link_to "new product", new_realm_product_path(@realm) %></strong>
+      <table class='listing'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Owner</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @products.each do |p|%>
+          <tr>
+            <td>
+              <%= link_to p.name, realm_product_path(@realm, p)%>
+            </td>
+            <td>
+              <%= p.user.name unless p.user == current_user%>
+            </td>
+            <td>
+              <%= crud_links([{:index => 'edit', :path => edit_user_product_path(current_user, p)},
+                              {:index => 'delete', :path => user_product_path(current_user, p)}]) %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class='col_div right'>
+    <div class='col_content'>
+      <h2>Members:</h2>
+      <strong><%= link_to "new member", new_assignment_user_path() %></strong>
+      <table class='listing'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+      <% @assigned_users.each do |u|%>
+        <tr>
+          <td>
+            <%= link_to u.name, edit_assignments_user_path(u)%>
+          </td>
+          <td>
+            <%#= crud_links([{:index => 'edit', :path => edit_user_product_path(current_user, p)},
+                            {:index => 'delete', :path => user_product_path(current_user, p)}]) %>
+        </tr>
+      <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+  

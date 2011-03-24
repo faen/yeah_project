@@ -4,4 +4,9 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail(:to => user.email, :subject => "Confirmation Request")
   end
+  
+  def invitation_confirmation(user)
+    @user = user
+    mail(:to => user.email, :subject => "You are invited")
+  end
 end

@@ -1,115 +1,155 @@
-<h1>Edit User<%= @user.email %></h1>
-<table class='not_altering'>
-<%= form_for @user do |f| %>
-  <tr>
-    <td colspan='2'>
-      <strong>Change Email</strong>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      current email:
-    </td>
-    <td>
-      <%= @user.email %>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <%= f.label :email %>
-    </td>
-    <td>
-      <%= f.text_field :email, :value => "" %>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <%= f.label :email_confirmation %>
-    </td>
-    <td>
-      <%= f.text_field :email_confirmation %>
-    </td>
-  </tr>
-  <tr>
-    <td colspan='2'>
-      <%= f.submit "update Email"%>
-    </td>
-  </tr>
-<% end %>
-
-<%= form_for @user do |f| %>
-  <tr>
-    <td colspan='2'>
-      <strong>Change password</strong>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <%= f.label :current_password %>
-    </td>
-    <td>
-      <%= f.password_field :current_password, :value => "", :autocomplete => "off" %>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <%= f.label :password %>
-    </td>
-    <td>
-      <%= f.password_field :password, :value => "", :autocomplete => "off" %>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <%= f.label :password_confirmation %>
-    </td>
-    <td>
-      <%= f.password_field :password_confirmation, :autocomplete => "off" %>
-    </td>
-  </tr>
-  <tr>
-    <td colspan='2'>
-      <%= f.submit "update Password"%>
-    </td>
-  </tr>
-<% end %>
-
-<%= form_for @user do |f| %>
-  <tr>
-    <td colspan='2'>
-      <strong>Change user profile:</strong>
-    </td>
-  </tr>
-  <%= f.fields_for :user_profile do |u_p| %>
-    <tr>
-      <td>
-        <%= u_p.label :firstname %>
-      </td>
-      <td>
-        <%= u_p.text_field :firstname %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <%= u_p.label :lastname %>
-      </td>
-      <td>
-        <%= u_p.text_field :lastname %>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <%= u_p.label :date_of_birth %>
-      </td>
-      <td>
-        <%= u_p.date_select :date_of_birth, {start_year:  Time.now.year, end_year:  Time.now.year - 100} %>
-      </td>
-    </tr>
-  <% end %>
-  <tr>
-    <td colspan='2'>
-      <%= f.submit "update Profile"%>
-    </td>
-  </tr>
-<% end %>
-</table>
+<div class='h_div h1'>
+  <h1>Edit User</h1><span>&nbsp;&nbsp;<%= @user.name%></span>
+</div>
+<section class='cols two clearfix'>
+  <div class='col_div left'>
+    <div class='col_content'>
+      <div class='form_container'>
+        <div class='form_margins'>
+          <div class='form_body'>
+            <table class='form'>
+            <%= form_for @user do |f| %>
+              <tr>
+                <td colspan='2'>
+                  <strong>Change Email</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  current email:
+                </td>
+                <td>
+                  <%= @user.email %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <%= f.label :email %>
+                </td>
+                <td>
+                  <%= f.text_field :email, :value => "" %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <%= f.label :email_confirmation %>
+                </td>
+                <td>
+                  <%= f.text_field :email_confirmation %>
+                </td>
+              </tr>
+              <tr>
+                <td colspan='2'>
+                  <%= f.submit "update Email"%>
+                </td>
+              </tr>
+            <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col_div right'>
+    <div class='col_content'>
+      <div class='form_container'>
+        <div class='form_margins'>
+          <div class='form_body'>
+            <table class='form'>
+              <%= form_for @user do |f| %>
+                <tr>
+                  <td colspan='2'>
+                    <strong>Change password</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= f.label :current_password %>
+                  </td>
+                  <td>
+                    <%= f.password_field :current_password, :value => "", :autocomplete => "off" %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= f.label :password %>
+                  </td>
+                  <td>
+                    <%= f.password_field :password, :value => "", :autocomplete => "off" %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= f.label :password_confirmation %>
+                  </td>
+                  <td>
+                    <%= f.password_field :password_confirmation, :value => "", :autocomplete => "off" %>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan='2'>
+                    <%= f.submit "update Password"%>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class='cols two clearfix'>
+  <div class='col_div left'>
+    <div class='col_content'>
+      <div class='form_container'>
+        <div class='form_margins'>
+          <div class='form_body'>
+            <table class='form'>
+            <%= form_for @user do |f| %>
+              <tr>
+                <td colspan='2'>
+                  <strong>Change user profile:</strong>
+                </td>
+              </tr>
+              <%= f.fields_for :user_profile do |u_p| %>
+                <tr>
+                  <td>
+                    <%= u_p.label :firstname %>
+                  </td>
+                  <td>
+                    <%= u_p.text_field :firstname %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= u_p.label :lastname %>
+                  </td>
+                  <td>
+                    <%= u_p.text_field :lastname %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= u_p.label :date_of_birth %>
+                  </td>
+                  <td>
+                    <%= u_p.date_select :date_of_birth, {start_year:  Time.now.year, end_year:  Time.now.year - 100} %>
+                  </td>
+                </tr>
+              <% end %>
+              <tr>
+                <td colspan='2'>
+                  <%= f.submit "update Profile"%>
+                </td>
+              </tr>
+            <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col_div left'>
+  </div>
+</section>

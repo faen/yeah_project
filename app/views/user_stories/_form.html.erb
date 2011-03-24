@@ -30,7 +30,8 @@
                   <td>
                     <% 
                       cs = @backlog.current_sprint
-                      options = [["none"], [cs.name, cs.id]]
+                      options = ["none"]
+                      options << [cs.name, cs.id] if cs
                       options += @backlog.future_sprints.collect{|s| [s.name, s.id]} 
                       
                     %>

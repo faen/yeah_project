@@ -14,9 +14,16 @@ class Realm < ActiveRecord::Base
   include StructuralItem::Model
   belongs_to :user
   has_many :products, :dependent => :destroy
+  has_many :assignments, :as => :assignable
+  has_many :assigned_users, :through => :assignments, :source => :user
   
   attr_accessible :name, :user
   
   validates :name, :presence => true
   validates :user, :presence => true
+  
+  def crowd
+    c = assigned_users + products.map{|p| p.crowd }.reject{|i| i.empty? }
+    c.flatten.uniq.compact
+  end
 end

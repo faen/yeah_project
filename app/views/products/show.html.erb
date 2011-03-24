@@ -1,34 +1,67 @@
 <%= resource_browser @product%>
 <div class='h_div h1'>
-  <span>showing product:</span><h1><%= " #{@product.name}"%></h1>
+  <h1>Showing product</h1><span>&nbsp;&nbsp;<%= @product.name%></span>
+  <%= crud_links([{:index => 'edit', :path => edit_product_path(@product)}])%>
 </div>
-<h2>Projects</h2>
-<strong><%= link_to "new project", new_product_project_path(@product)%></strong>
-<table class='listing'>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @projects.each do |p| %>
-      <tr>
-        <td>
-          <%= link_to p.name, product_project_path(@product, p)%>
-        </td>
-        <td>
-          <%= "(#{p.organisation_type})"%>
-        </td>
-        <td>
-          <%= crud_links([{:index => 'edit', :path => edit_product_project_path(@product, p)},
-                          {:index => 'delete', :path => product_project_path(@product, p)}]) %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<section class='cols two clearfix'>
+  <div class='col_div left'>
+    <div class='col_content'>
+      <h2>Projects</h2>
+      <strong><%= link_to "new project", new_product_project_path(@product)%></strong>
+      <table class='listing'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @projects.each do |p| %>
+            <tr>
+              <td>
+                <%= link_to p.name, product_project_path(@product, p)%>
+              </td>
+              <td>
+                <%= "(#{p.organisation_type})"%>
+              </td>
+              <td>
+                <%= crud_links([{:index => 'edit', :path => edit_product_project_path(@product, p)},
+                                {:index => 'delete', :path => product_project_path(@product, p)}]) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class='col_div right'>
+    <div class='col_content'>
+      <h2>Members:</h2>
+      <strong><%= link_to "new member", new_assignment_user_path() %></strong>
+      <table class='listing'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+      <% @assigned_users.each do |u|%>
+        <tr>
+          <td>
+            <%= link_to u.name, edit_assignments_user_path(u)%>
+          </td>
+          <td>
+            <%#= crud_links([{:index => 'edit', :path => edit_user_product_path(current_user, p)},
+                            {:index => 'delete', :path => user_product_path(current_user, p)}]) %>
+        </tr>
+      <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 <p>
   <%= parent_link @product %>
 </p>

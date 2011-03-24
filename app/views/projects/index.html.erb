@@ -29,3 +29,38 @@
 <% end %>
   </tbody>
 </table>
+
+<h1>Assigned projects</h1>
+<table class='listing'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Product</th>
+      <th>Realm</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<% @assigned_projects.each do |p| %>
+  <tr>
+    <td>
+      <%= link_to p.name, project_path(p) %>
+    </td>
+    <td>
+      <%= p.user.name %>
+    </td>
+    <td>
+      <%= link_to p.product.name, product_path(p.product) %>
+    </td>
+    <td>
+      <%= link_to p.realm.name, realm_path(p.realm) %>
+    </td>
+    <td>
+      <%#= crud_links([{:index => 'edit', :path => edit_user_product_path(current_user, p)},
+                      {:index => 'delete', :path => user_product_path(current_user, p)}]) %>
+    </td>
+  </tr>
+<% end %>
+  </tbody>
+</table>

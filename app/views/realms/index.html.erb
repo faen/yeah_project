@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>products</th>
+      <th>Products</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
@@ -19,6 +19,37 @@
     </td>
     <td>
       <%= crud_links([{:index => 'edit', :path => edit_user_realm_path(current_user, r)},
+                      {:index => 'delete', :path => user_realm_path(current_user, r)}]) %>
+    </td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+
+<h1>Assigned realms</h1>
+<table class='listing'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Products</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @assigned_realms.each do |r| %>
+  <tr>
+    <td>
+      <%= link_to r.name, user_realm_path(current_user, r) %>
+    </td>
+    <td>
+      <%= r.user.name %>
+    </td>
+    <td>
+      <%= r.products.collect{|p| [p.name]}.split.join(", ") %>
+    </td>
+    <td>
+      <%#= crud_links([{:index => 'edit', :path => edit_user_realm_path(current_user, r)},
                       {:index => 'delete', :path => user_realm_path(current_user, r)}]) %>
     </td>
   </tr>

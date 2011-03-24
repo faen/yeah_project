@@ -24,6 +24,25 @@
               <%= f.text_field :name %>
             </td>
           </tr>
+          <tr>
+            <td>
+              Select members:
+            </td>
+            <td></td>
+          </tr>
+          <% 
+            users_for_select = @realm.crowd
+            users_for_select.each do |u|
+          %>
+          <tr>
+            <td>
+              <%= u.name %>
+            </td>
+            <td>
+              <%= check_box_tag 'product[assigned_users][]', u.id, @product_members.include?(u) %>
+            </td>
+          </tr>
+          <% end %>
         </table>
       </div>
       <div class='form_actions'>
